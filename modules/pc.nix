@@ -14,7 +14,7 @@
   services.displayManager.sddm.enable = true;
   services.displayManager.sddm.wayland.enable = true;
   environment.plasma6.excludePackages =
-    with pkgs; [ plasma-browser-integration kwin-x11 ];
+    with pkgs.kdePackages; [ plasma-browser-integration kwin-x11 ];
 
   security.rtkit.enable = true;
   services.pipewire.enable = true;
@@ -48,7 +48,7 @@
   # programs
   programs.firefox =
     { enable  = true;
-      package = pkgs.firefox-devedition
+      package = pkgs.firefox-devedition;
     };
 
   programs.steam.enable = true;

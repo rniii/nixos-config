@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 
 {
   imports = [ /etc/nixos/hardware-configuration.nix ];
@@ -13,7 +13,7 @@
   services.sshd.enable = true;
 
   time.timeZone = null;
-  i18n.defaultLocale = "en_US.UTF-8";
+  i18n.defaultLocale = lib.mkDefault "en_US.UTF-8";
 
   # XXX: aaaaaaaaaaaaaaaaaaaaaaaaaaaa keysssssss
   users.users.rini =
