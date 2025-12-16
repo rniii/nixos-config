@@ -29,4 +29,7 @@
         [
         ];
     };
+
+  nix.nixPath =
+    let sources = import ../npins; in [ "nixpkgs=${sources.nixpkgs}" ];
 }
