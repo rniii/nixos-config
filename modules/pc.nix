@@ -56,11 +56,11 @@
   environment.systemPackages =
     with pkgs;
     [ keepassxc
+      librewolf
       osu-lazer-bin
       signal-desktop
-      librewolf
+      vesktop
 
-      vim
       neovim
     ];
 }
