@@ -55,7 +55,10 @@
 
   environment.systemPackages =
     with pkgs;
-    [ keepassxc
+    [ aseprite
+      gimp
+      keepassxc
+      krita
       librewolf
       osu-lazer-bin
       signal-desktop
