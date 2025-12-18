@@ -62,6 +62,7 @@
       krita
       librewolf
       osu-lazer-bin
+      prismlauncher
       signal-desktop
       vesktop
 
