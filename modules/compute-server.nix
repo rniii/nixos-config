@@ -22,6 +22,7 @@
         python314
         rustup
         git
+        screen
         neovim
       ];
 }
