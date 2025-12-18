@@ -33,6 +33,7 @@
   environment.systemPackages =
     with pkgs;
     [ git
+      npins
       rsync
       strace
       vim
