@@ -1,7 +1,7 @@
 {
   imports =
     [ ../modules/common.nix
-      ../modules/compute.nix
+      ../modules/compute-server.nix
     ];
 
   networking.hostName = "compute2";

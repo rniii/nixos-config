@@ -5,4 +5,4 @@
     ];
 
   networking.hostName = "tulip";
-};
+}

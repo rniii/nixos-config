@@ -4,4 +4,4 @@ let
 in
   builtins.foldl'
     (cfgs: host: cfgs // { ${host} = evalCfg { modules = [ ./hosts/${host}.nix ]; }; })
-    {} [ "aaya" "tulip" ]
+    {} [ "aaya" "compute2" "tulip" ]
