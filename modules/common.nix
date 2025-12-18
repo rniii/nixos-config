@@ -1,6 +1,8 @@
 { lib, pkgs, ... }:
 
-{
+let
+  pubkeys = import ../pubkeys.nix;
+in {
   imports = [ /etc/nixos/hardware-configuration.nix ];
 
   system.stateVersion = "25.11"; # yes, i did read the comment
@@ -15,19 +17,14 @@
   time.timeZone = null;
   i18n.defaultLocale = lib.mkDefault "en_US.UTF-8";
 
-  # XXX: aaaaaaaaaaaaaaaaaaaaaaaaaaaa keysssssss
   users.users.rini =
     { isNormalUser = true;
-      openssh.authorizedKeys.keys =
-        [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOfUHDcpgeZnJIZ0PyJKWx7f5xeV8Tq9ppX7vbXKZjto lily@tulip"
-        ];
+      openssh.authorizedKeys.keys = pubkeys;
     };
 
   users.users.lily =
     { isNormalUser = true;
-      openssh.authorizedKeys.keys =
-        [
-        ];
+      openssh.authorizedKeys.keys = pubkeys;
     };
 
   environment.systemPackages =
