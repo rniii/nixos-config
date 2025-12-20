@@ -29,7 +29,9 @@ in {
 
   environment.systemPackages =
     with pkgs;
-    [ git
+    [ binutils
+      git
+      jq
       npins
       rsync
       strace
