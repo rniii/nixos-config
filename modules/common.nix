@@ -13,6 +13,7 @@ in {
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   services.sshd.enable = true;
+  programs.mosh.enable = true;
 
   time.timeZone = null;
   i18n.defaultLocale = lib.mkDefault "en_US.UTF-8";
