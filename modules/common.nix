@@ -33,6 +33,7 @@ in {
       git
       jq
       npins
+      p7zip
       rsync
       strace
       vim
