@@ -2,10 +2,6 @@
 
 {
   i18n.defaultLocale = "en_US.UTF-8";
-  networking.networkmanager.enable = true;
-
-  services.avahi.enable = true;
-  services.avahi.nssmdns4 = true;
 
   users.users.openbench =
     { isNormalUser = true;

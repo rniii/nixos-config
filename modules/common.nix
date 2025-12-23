@@ -12,6 +12,17 @@ in {
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
+  networking.networkmanager.enable = true;
+
+  services.avahi.enable = true;
+  services.avahi.nssmdns4 = true;
+
+  services.tailscale =
+    { enable = true;
+      extraDaemonFlags = [ "--no-logs-no-support" ];
+    };
+
+
   services.sshd.enable = true;
   programs.mosh.enable = true;
 
