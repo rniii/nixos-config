@@ -25,7 +25,8 @@
   i18n.inputMethod =
     { enable = true;
       type   = "fcitx5";
-      fcitx5.addons = [ pkgs.fcitx5-mozc-ut ];
+      fcitx5.addons = with pkgs;
+        [ fcitx5-mozc-ut ];
     };
 
   fonts.packages =
@@ -37,7 +38,11 @@
     ];
 
   # programs
-  programs.steam.enable = true;
+  programs.steam =
+    { enable = true;
+      extraCompatPackages = with pkgs;
+        [ proton-ge-bin ];
+    };
 
   environment.systemPackages =
     with pkgs;
