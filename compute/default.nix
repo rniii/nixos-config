@@ -1,6 +1,10 @@
 { pkgs, lib, ... }:
 
 {
+  imports =
+    [ ../common
+    ];
+
   i18n.defaultLocale = "en_US.UTF-8";
 
   users.users.openbench =

@@ -2,8 +2,7 @@ let
   inherit (import ../npins) nixos-hardware;
 in {
   imports =
-    [ ../modules/common.nix
-      ../modules/pc.nix
+    [ ../desktop
 
       "${nixos-hardware}/lenovo/thinkpad/t14"
       "${nixos-hardware}/common/cpu/amd"

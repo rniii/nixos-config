@@ -2,8 +2,7 @@ let
   inherit (import ../npins) nixos-hardware;
 in {
   imports =
-    [ ../modules/common.nix
-      ../modules/pc.nix
+    [ ../desktop
 
       # XXX: lily can use this s/e14/t14/, there is also no T14 Gen 6 config yet
       "${nixos-hardware}/lenovo/thinkpad/e14"

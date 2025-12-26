@@ -48,6 +48,7 @@ in {
       p7zip
       rsync
       strace
+      tree
       vim
     ];
 
