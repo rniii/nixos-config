@@ -22,6 +22,8 @@
       gimp
       keepassxc
       krita
+      mpv
+      obs-studio
       osu-lazer-bin
       prismlauncher
       signal-desktop
@@ -30,5 +32,8 @@
       # tuis
       lazygit
       neovim
+
+      # other
+      ffmpeg
     ];
 }

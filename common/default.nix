@@ -3,7 +3,12 @@
 let
   pubkeys = import ../pubkeys.nix;
 in {
-  imports = [ /etc/nixos/hardware-configuration.nix ];
+  imports =
+    [ # from nixos-generate-config
+      /etc/nixos/hardware-configuration.nix
+
+      ./programs.nix
+    ];
 
   system.stateVersion = "25.11"; # yes, i did read the comment
 
@@ -24,7 +29,6 @@ in {
 
 
   services.sshd.enable = true;
-  programs.mosh.enable = true;
 
   time.timeZone = null;
   i18n.defaultLocale = lib.mkDefault "en_US.UTF-8";
@@ -38,19 +42,6 @@ in {
     { isNormalUser = true;
       openssh.authorizedKeys.keys = pubkeys;
     };
-
-  environment.systemPackages =
-    with pkgs;
-    [ binutils
-      git
-      jq
-      npins
-      p7zip
-      rsync
-      strace
-      tree
-      vim
-    ];
 
   nix.nixPath =
     let sources = import ../npins; in [ "nixpkgs=${sources.nixpkgs}" ];
