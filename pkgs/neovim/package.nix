@@ -17,20 +17,6 @@ let
   toLua = lib.generators.toLua { };
 
   luaRc = ''
-    vim.o.number = true
-    vim.o.relativenumber = true
-    vim.o.signcolumn = "yes"
-    vim.o.cursorline = true
-    vim.o.list = true
-    vim.o.listchars = "extends:>,precedes:<,tab:  ,trail:•"
-
-    vim.o.smartcase = true
-    vim.o.ignorecase = true
-
-    vim.o.undofile = true
-
-    vim.g.mapleader = ","
-
     require("nvim-web-devicons").setup
       { color_icons = false,
       }
@@ -41,6 +27,29 @@ let
         indent    = { enable = true },
       }
   '';
+
+  vimOptions =
+    { number = true;
+      relativenumber = true;
+      signcolumn = "yes";
+      cursorline = true;
+      list = true;
+      listchars =
+        { extends = ">";
+          precedes = "<";
+          tab = "  ";
+          trail = "•";
+        };
+
+      smartcase = true;
+      ignorecase = true;
+
+      undofile = true;
+    };
+
+  vimGlobals =
+    { mapleader = ",";
+    };
 
   lspsByPackage =
     { ccls = "ccls";
@@ -66,6 +75,11 @@ let
       # uiua
       # kotlin_lsp
     };
+
+  genOpts = ns:
+    lib.foldlAttrs (code: opt: val: code + ''
+      ${ns}.${opt} = ${toLua val}
+    '') "";
 in
 wrapNeovimUnstable neovim-unwrapped
   { wrapperArgs =
@@ -73,13 +87,16 @@ wrapNeovimUnstable neovim-unwrapped
         (name: [ "--suffix" "PATH" ":" "${pkgs.${name}}/bin" ])
         (attrNames lspsByPackage);
 
-    luaRcContent = ''
+    luaRcContent = luaRc
+    + genOpts "vim.opt" vimOptions
+    + genOpts "vim.g" vimGlobals
+    + ''
       vim.lsp.enable ${pipe lspsByPackage
         [ attrValues
           (concatMap toList)
           toLua
         ]}
-    '' + luaRc;
+    '';
 
     plugins = with vimPlugins;
       [ # ui plugins
