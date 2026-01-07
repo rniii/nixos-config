@@ -31,7 +31,7 @@
 
       # tuis
       lazygit
-      neovim
+      (callPackage ../pkgs/neovim/package.nix { })
 
       # other
       ffmpeg
