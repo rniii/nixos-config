@@ -7,6 +7,9 @@
     [ # devel
       git
 
+      # nixing
+      npins
+
       # sysadmin
       nmap
       p7zip
