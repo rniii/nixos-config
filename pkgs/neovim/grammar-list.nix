@@ -29,7 +29,6 @@ grammars: with grammars;
 
   # data
   json
-  jsonc
   toml
   yaml
 
