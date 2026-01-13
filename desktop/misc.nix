@@ -15,11 +15,21 @@
         [ fcitx5-mozc-ut ];
     };
 
+  fonts.fontconfig.defaultFonts =
+    { monospace =
+        [ "Sarasa Term J"
+          "Symbols Nerd Font"
+        ];
+    };
+
   fonts.packages =
     with pkgs;
     [ noto-fonts-cjk-sans
+      noto-fonts-color-emoji
       sarasa-gothic
       liberation_ttf
       lmodern
+
+      nerd-fonts.symbols-only
     ];
 }
