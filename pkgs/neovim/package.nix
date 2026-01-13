@@ -10,23 +10,71 @@ let
   inherit (lib)
     attrNames
     attrValues
+    concatLines
     concatMap
-    toList
+    filter
+    mapAttrsToList
+    mapNullable
     pipe
+    toList
     ;
+
   toLua = lib.generators.toLua { };
 
-  luaRc = ''
-    require("nvim-web-devicons").setup
-      { color_icons = false,
+  pluginConfig = with vimPlugins;
+    [ # ui plugins
+      dropbar-nvim
+      { plug = fidget-nvim;
+        main = "fidget";
+        opts.progress.display.progress_icon = [ "noise" ];
       }
+      gitsigns-nvim
+      { plug = nvim-web-devicons;
+        opts = { color_icons = false; };
+      }
+      { plug = nvim-origami;
+        main = "origami";
+        opts.autoFold = { enabled = true; kinds = [ "imports" ]; };
+        config = ''
+          vim.o.foldlevel = 99
+          vim.o.foldlevelstart = 99
+        '';
+      }
+      satellite-nvim
+      telescope-nvim
+      vim-dirvish
 
-    require("nvim-treesitter.configs").setup
-      { highlight = { enable = true },
-        autotag   = { enable = true },
-        indent    = { enable = true },
+      # highlighting
+      { plug = nvim-treesitter.withPlugins (import ./grammar-list.nix);
+        config = ''
+          vim.api.nvim_create_autocmd("FileType", { pattern = "*", callback = function()
+            if vim.treesitter.query.get(vim.bo.filetype, "highlights") then
+              vim.treesitter.start()
+            end
+          end })
+        '';
       }
-  '';
+      { plug = nvim-highlight-colors;
+        opts = { };
+      }
+      vim-illuminate
+
+      # lsp
+      nvim-lspconfig
+      SchemaStore-nvim
+      # todo: twoslash
+
+      # editing
+      # nvim-autopairs
+      # nvim-ts-autotag
+      vim-commentary
+      vim-easy-align
+      vim-fugitive
+      vim-repeat
+      vim-rsi
+      vim-sleuth
+      vim-surround
+    ];
 
   vimOptions =
     { number = true;
@@ -77,9 +125,14 @@ let
     };
 
   genOpts = ns:
-    lib.foldlAttrs (code: opt: val: code + ''
-      ${ns}.${opt} = ${toLua val}
-    '') "";
+    mapAttrsToList (opt: val: "${ns}.${opt} = ${toLua val}");
+
+  genPluginConfig =
+    { plug, main ? plug.pname, opts ? null, config ? null }:
+    filter (c: c != null)
+      [ config
+        (mapNullable (opts: "require(${toLua main}).setup ${toLua opts}") opts)
+      ];
 in
 wrapNeovimUnstable neovim-unwrapped
   { wrapperArgs =
@@ -87,48 +140,18 @@ wrapNeovimUnstable neovim-unwrapped
         (name: [ "--suffix" "PATH" ":" "${pkgs.${name}}/bin" ])
         (attrNames lspsByPackage);
 
-    luaRcContent = luaRc
-    + genOpts "vim.opt" vimOptions
-    + genOpts "vim.g" vimGlobals
-    + ''
-      vim.lsp.enable ${pipe lspsByPackage
-        [ attrValues
-          (concatMap toList)
-          toLua
-        ]}
-    '';
+    luaRcContent = concatLines
+      ( concatMap genPluginConfig (filter (p: p ? plug) pluginConfig)
+          ++ genOpts "vim.opt" vimOptions
+          ++ genOpts "vim.g" vimGlobals
+          ++ [ ''
+            vim.lsp.enable ${pipe lspsByPackage
+              [ attrValues
+                (concatMap toList)
+                toLua
+              ]}
+          '' ]
+      );
 
-    plugins = with vimPlugins;
-      [ # ui plugins
-        dropbar-nvim
-        fidget-nvim
-        gitsigns-nvim
-        lualine-nvim
-        nvim-origami
-        nvim-web-devicons
-        satellite-nvim
-        telescope-nvim
-        vim-dirvish
-
-        # highlighting
-        (nvim-treesitter.withPlugins (import ./grammar-list.nix))
-        nvim-highlight-colors
-        # vim-polyglot
-
-        # lsp
-        nvim-lspconfig
-        SchemaStore-nvim
-        # todo: twoslash
-
-        # editing
-        # nvim-autopairs
-        # nvim-ts-autotag
-        vim-commentary
-        vim-easy-align
-        vim-fugitive
-        vim-repeat
-        vim-rsi
-        vim-sleuth
-        vim-surround
-      ];
+    plugins = map (p: p.plug or p) pluginConfig;
   }
