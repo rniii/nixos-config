@@ -4,23 +4,28 @@ let
   xkb-patched =
     pkgs.xorg.xkeyboardconfig.overrideAttrs
       { postPatch = ''
-        cat >>keycodes/thinkpad <<EOF
-        partial xkb_keycodes "abnt_fix" {
-          alias <RCTL> = <AB11>;
+        cat >>symbols/jp <<EOF
+
+        partial alphanumeric_keys xkb_symbols "abnt2_thinkpad" {
+          include "jp(common)"
+
+          name[Group1]= "Japanese (ABNT2, IBM/Lenovo ThinkPad)";
+
+          key <RCTL> {[ backslash, underscore ]};
         };
         EOF
 
         ${pkgs.ed}/bin/ed -v rules/base.xml <<EOF
-        /<description>Compatibility options
-        /<\/group>
+        /<description>Japanese<\/description>
+        /<\/variantList>
         -
         a
-        <option>
+        <variant>
           <configItem>
-            <name>thinkpad:abnt_fix</name>
-            <description>Fix the ABNT Thinkpad layout having a key detected as Right Control</description>
+            <name>abnt2_thinkpad</name>
+            <description>Japanese (ABNT2, IBM/Lenovo ThinkPad)</description>
           </configItem>
-        </option>
+        </variant>
         .
         w
         EOF
