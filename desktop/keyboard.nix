@@ -7,7 +7,7 @@ let
         cat >>symbols/jp <<EOF
 
         partial alphanumeric_keys xkb_symbols "abnt2_thinkpad" {
-          include "jp(common)"
+          include "jp(106)"
 
           name[Group1]= "Japanese (ABNT2, IBM/Lenovo ThinkPad)";
 
