@@ -1,8 +1,10 @@
 {
+  callPackage,
   lib,
   neovim-unwrapped,
   pkgs,
   vimPlugins,
+  vimUtils,
   wrapNeovimUnstable,
 }:
 
@@ -60,9 +62,15 @@ let
       vim-illuminate
 
       # lsp
-      nvim-lspconfig
+      { plug = nvim-lspconfig;
+        config = ''
+          vim.lsp.config("ts_ls", { on_attach = function(client, bufnr)
+            require("twoslash-queries").attach(client, bufnr)
+          end })
+        '';
+      }
       SchemaStore-nvim
-      # todo: twoslash
+      twoslash-queries-nvim
 
       # editing
       # nvim-autopairs
@@ -75,6 +83,10 @@ let
       vim-sleuth
       vim-surround
     ];
+
+  twoslash-queries-nvim = callPackage ../twoslash-queries-nvim/package.nix
+    { inherit (vimUtils) buildVimPlugin;
+    };
 
   vimOptions =
     { number = true;
