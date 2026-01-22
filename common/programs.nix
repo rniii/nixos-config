@@ -3,6 +3,9 @@
 {
   programs.mosh.enable = true;
 
+  documentation.dev.enable = true;
+  documentation.man.generateCaches = true;
+
   environment.systemPackages = with pkgs;
     [ # devel
       git
@@ -31,5 +34,9 @@
       file
       radare2
       strace
+
+      # doc
+      man-pages
+      man-pages-posix
     ];
 }

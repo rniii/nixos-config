@@ -12,7 +12,6 @@ in {
 
   system.stateVersion = "25.11"; # yes, i did read the comment
 
-  # XXX: server could probably use UKI or something
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -26,7 +25,6 @@ in {
     { enable = true;
       extraDaemonFlags = [ "--no-logs-no-support" ];
     };
-
 
   services.sshd.enable = true;
 
