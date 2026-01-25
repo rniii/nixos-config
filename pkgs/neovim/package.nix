@@ -32,7 +32,7 @@ let
       }
       gitsigns-nvim
       { plug = nvim-web-devicons;
-        opts = { color_icons = false; };
+        opts.color_icons = false;
       }
       { plug = nvim-origami;
         main = "origami";
@@ -73,11 +73,14 @@ let
       twoslash-queries-nvim
 
       # editing
-      # nvim-autopairs
-      # nvim-ts-autotag
+      { plug = mini-pairs;
+        opts.modes.command = true;
+      }
       vim-commentary
       vim-easy-align
+      vim-endwise
       vim-fugitive
+      vim-ragtag
       vim-repeat
       vim-rsi
       vim-sleuth
