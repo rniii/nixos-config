@@ -11,14 +11,14 @@
       "submodules": false,
       "revision": "40b1a28dce561bea34858287fbb23052c3ee63fe",
       "url": "https://github.com/NixOS/nixos-hardware/archive/40b1a28dce561bea34858287fbb23052c3ee63fe.tar.gz",
-      "hash": "197v6xxdq5j4w8kil6q21ij9x6ng8z6j72brkwwjim23798c2c4n"
+      "hash": "sha256-ljDBUDpD1Cg5n3mJI81Hz5qeZAwCGxon4kQW3Ho3+6Q="
     },
     "nixpkgs": {
       "type": "Channel",
       "name": "nixos-unstable",
-      "url": "https://releases.nixos.org/nixos/unstable/nixos-26.05pre924538.3497aa5c9457/nixexprs.tar.xz",
-      "hash": "1m8k7ck70k6h1imbiky7i4p5nnp2byjyp3qlwap0s4h2rymvgdgi"
+      "url": "https://releases.nixos.org/nixos/unstable/nixos-26.05pre931542.88d3861acdd3/nixexprs.tar.xz",
+      "hash": "sha256-S/5RU76BdQ32bbE99a+G9gMuatpVWEvIfeSjEqyoFS4="
     }
   },
-  "version": 5
+  "version": 7
 }
