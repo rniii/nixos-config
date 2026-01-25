@@ -4,7 +4,7 @@
   programs.mosh.enable = true;
 
   documentation.dev.enable = true;
-  documentation.man.generateCaches = true;
+  # documentation.man.generateCaches = true;
 
   environment.systemPackages = with pkgs;
     [ # devel
