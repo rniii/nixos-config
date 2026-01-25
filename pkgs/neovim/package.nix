@@ -62,15 +62,34 @@ let
       vim-illuminate
 
       # lsp
-      { plug = nvim-lspconfig;
+      nvim-lspconfig
+      { plug = SchemaStore-nvim;
+        config = ''
+          vim.lsp.config("jsonls", { settings = { json = {
+            schemas = require("schemastore").json.schemas(),
+            validate = { enable = true },
+          } } })
+        '';
+      }
+      { plug = twoslash-queries-nvim;
         config = ''
           vim.lsp.config("ts_ls", { on_attach = function(client, bufnr)
             require("twoslash-queries").attach(client, bufnr)
           end })
         '';
       }
-      SchemaStore-nvim
-      twoslash-queries-nvim
+
+      # completion
+      { plug = blink-cmp;
+        opts.keymap.preset = "super-tab";
+        opts.signature.enabled = true;
+        opts.cmdline.keymap.preset = "inherit";
+        opts.cmdline.completion.menu.auto_show = true;
+
+        config = ''
+          vim.lsp.config('*', { capabilities = require("blink.cmp").get_lsp_capabilities() })
+        '';
+      }
 
       # editing
       { plug = mini-pairs;
@@ -116,6 +135,7 @@ let
 
   lspsByPackage =
     { ccls = "ccls";
+      nixd = "nixd";
       typescript-language-server = "ts_ls";
       vscode-langservers-extracted =
         [ "cssls"
