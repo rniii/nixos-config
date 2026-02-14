@@ -12,6 +12,7 @@ let
   inherit (lib)
     attrNames
     attrValues
+    attrVals
     concatLines
     concatMap
     filter
@@ -62,7 +63,10 @@ let
       vim-illuminate
 
       # lsp
-      nvim-lspconfig
+      ( nvim-lspconfig.overrideAttrs
+          { passthru.runtimeDeps = attrVals (attrNames lspsByPackage) pkgs;
+          }
+      )
       { plug = SchemaStore-nvim;
         config = ''
           vim.lsp.config("jsonls", { settings = { json = {
@@ -170,12 +174,7 @@ let
       ];
 in
 wrapNeovimUnstable neovim-unwrapped
-  { wrapperArgs =
-      concatMap
-        (name: [ "--suffix" "PATH" ":" "${pkgs.${name}}/bin" ])
-        (attrNames lspsByPackage);
-
-    luaRcContent = concatLines
+  { luaRcContent = concatLines
       ( concatMap genPluginConfig (filter (p: p ? plug) pluginConfig)
           ++ genOpts "vim.opt" vimOptions
           ++ genOpts "vim.g" vimGlobals

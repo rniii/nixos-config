@@ -34,4 +34,6 @@ in {
       "/nix"  = mkSubvol "nix"  [ "noatime" "compress" ];
       "/home" = mkSubvol "home" [ "noatime" ];
     };
+
+  services.broadcast-box.enable = true;
 }

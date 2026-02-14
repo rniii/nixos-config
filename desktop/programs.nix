@@ -23,6 +23,7 @@
       keepassxc
       krita
       mpv
+      obs-cmd
       obs-studio
       osu-lazer-bin
       prismlauncher
