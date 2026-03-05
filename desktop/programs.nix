@@ -16,6 +16,13 @@
         [ proton-ge-bin ];
     };
 
+  programs.obs-studio =
+    { enable = true;
+      enableVirtualCamera = true;
+      plugins = with pkgs.obs-studio-plugins;
+        [ input-overlay ];
+    };
+
   environment.systemPackages = with pkgs;
     [ # gui applications
       aseprite
@@ -24,7 +31,6 @@
       krita
       mpv
       obs-cmd
-      obs-studio
       osu-lazer-bin
       prismlauncher
       signal-desktop
@@ -36,5 +42,6 @@
 
       # other
       ffmpeg
+      qpwgraph
     ];
 }

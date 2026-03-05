@@ -5,6 +5,7 @@
   services.pipewire =
     { enable = true;
       pulse.enable = true;
+      jack.enable = true;
     };
 
   i18n.defaultLocale = "en_GB.UTF-8";

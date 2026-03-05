@@ -26,14 +26,14 @@ let
 
   pluginConfig = with vimPlugins;
     [ # ui plugins
-      dropbar-nvim
+      noa-vim
       { plug = fidget-nvim;
         main = "fidget";
         opts.progress.display.progress_icon = [ "noise" ];
       }
       gitsigns-nvim
-      { plug = nvim-web-devicons;
-        opts.color_icons = false;
+      { plug = mini-icons;
+        opts = { };
       }
       { plug = nvim-origami;
         main = "origami";
@@ -43,7 +43,6 @@ let
           vim.o.foldlevelstart = 99
         '';
       }
-      satellite-nvim
       telescope-nvim
       vim-dirvish
 
@@ -109,6 +108,10 @@ let
       vim-sleuth
       vim-surround
     ];
+
+  noa-vim = callPackage ../noa-vim/package.nix
+    { inherit (vimUtils) buildVimPlugin;
+    };
 
   twoslash-queries-nvim = callPackage ../twoslash-queries-nvim/package.nix
     { inherit (vimUtils) buildVimPlugin;
