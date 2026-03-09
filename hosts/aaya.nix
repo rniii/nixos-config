@@ -1,3 +1,5 @@
+{ lib, ... }:
+
 {
   imports =
     with import ../npins;
@@ -10,14 +12,18 @@
     ];
 
   networking.hostName = "aaya";
-  i18n.defaultLocale = "ja_JP.UTF-8";
+  i18n.defaultLocale = lib.mkForce "ja_JP.UTF-8";
 
   services.broadcast-box.enable = true;
 
   # nixos-generate-config
 
-  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "usbhid" ];
+  hardware.enableRedistributableFirmware = true;
+
+  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "usbhid" "usb_storage" "sd_mod" ];
+  boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
+  boot.extraModulePackages = [ ];
 
   fileSystems =
     let
