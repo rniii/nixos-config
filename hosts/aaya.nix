@@ -1,19 +1,23 @@
-let
-  inherit (import ../npins) nixos-hardware;
-in {
+{
   imports =
+    with import ../npins;
     [ ../desktop
 
-      # XXX: lily can use this s/e14/t14/, there is also no T14 Gen 6 config yet
       "${nixos-hardware}/lenovo/thinkpad/e14"
       "${nixos-hardware}/common/cpu/amd"
       "${nixos-hardware}/common/gpu/amd"
-      "${nixos-hardware}/common/cpu/amd/pstate.nix" # XXX and tell me if this is worth it
-
-      # XXX: P.S. might be worth contributing to nixos-hardware later
+      "${nixos-hardware}/common/cpu/amd/pstate.nix"
     ];
 
   networking.hostName = "aaya";
+  i18n.defaultLocale = "ja_JP.UTF-8";
+
+  services.broadcast-box.enable = true;
+
+  # nixos-generate-config
+
+  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "usbhid" ];
+  boot.kernelModules = [ "kvm-amd" ];
 
   fileSystems =
     let
@@ -35,5 +39,10 @@ in {
       "/home" = mkSubvol "home" [ "noatime" ];
     };
 
-  services.broadcast-box.enable = true;
+  swapDevices =
+    [ { device = "/dev/disk/by-uuid/57bda0f8-3329-4653-9656-a116b79fcbcd"; }
+    ];
+
+  nixpkgs.hostPlatform = "x86_64-linux";
+  hardware.cpu.amd.updateMicrocode = true;
 }

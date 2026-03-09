@@ -1,13 +1,8 @@
 { lib, pkgs, ... }:
 
-let
-  pubkeys = import ../pubkeys.nix;
-in {
+{
   imports =
-    [ # from nixos-generate-config
-      /etc/nixos/hardware-configuration.nix
-
-      ./programs.nix
+    [ ./programs.nix
     ];
 
   system.stateVersion = "25.11"; # yes, i did read the comment
@@ -31,16 +26,17 @@ in {
   time.timeZone = null;
   i18n.defaultLocale = lib.mkDefault "en_US.UTF-8";
 
-  users.users.rini =
-    { isNormalUser = true;
-      openssh.authorizedKeys.keys = pubkeys;
+  users.users =
+    let pubkeys = import ../pubkeys.nix; in
+    { rini =
+        { isNormalUser = true;
+          openssh.authorizedKeys.keys = pubkeys;
+        };
+      lily =
+        { isNormalUser = true;
+          openssh.authorizedKeys.keys = pubkeys;
+        };
     };
 
-  users.users.lily =
-    { isNormalUser = true;
-      openssh.authorizedKeys.keys = pubkeys;
-    };
-
-  nix.nixPath =
-    let sources = import ../npins; in [ "nixpkgs=${sources.nixpkgs}" ];
+  nix.nixPath = with import ../npins; [ "nixpkgs=${nixpkgs}" ];
 }
