@@ -13,6 +13,7 @@
 
   networking.hostName = "aaya";
   i18n.defaultLocale = lib.mkForce "ja_JP.UTF-8";
+  programs.firefox.languagePacks = [ "ja" ];
 
   services.broadcast-box.enable = true;
 

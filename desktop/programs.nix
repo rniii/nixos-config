@@ -23,6 +23,12 @@
         [ input-overlay ];
     };
 
+  environment.variables =
+    rec
+    { EDITOR = "nvim";
+      VISUAL = EDITOR;
+    };
+
   environment.systemPackages = with pkgs;
     [ # gui applications
       aseprite

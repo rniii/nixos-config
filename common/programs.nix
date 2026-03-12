@@ -1,10 +1,11 @@
 { pkgs, ... }:
 
 {
-  programs.mosh.enable = true;
-
   documentation.dev.enable = true;
-  # documentation.man.generateCaches = true;
+
+  programs.mosh.enable = true;
+  programs.nano.enable = false;
+  programs.neovim.enable = true;
 
   environment.systemPackages = with pkgs;
     [ # devel
@@ -18,6 +19,7 @@
       p7zip
       rsync
       tree
+      vim
 
       # shell
       ascii

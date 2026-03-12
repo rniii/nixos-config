@@ -1,11 +1,9 @@
-{ pkgs, lib, ... }:
+{ pkgs, ... }:
 
 {
   imports =
     [ ../common
     ];
-
-  i18n.defaultLocale = "en_US.UTF-8";
 
   users.users.openbench =
     { isNormalUser = true;
@@ -14,15 +12,12 @@
         ];
     };
 
-  environment.systemPackages =
-    with pkgs;
-      [ gnumake
-        gcc_multi
-        clang
-        python314
-        rustup
-        git
-        screen
-        neovim
-      ];
+  environment.systemPackages = with pkgs;
+    [ gnumake
+      gcc_multi
+      clang
+      python314
+      rustup
+      screen
+    ];
 }

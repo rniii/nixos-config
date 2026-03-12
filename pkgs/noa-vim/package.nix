@@ -7,7 +7,7 @@ buildVimPlugin
     src = fetchFromGitHub
       { owner = "rniii";
         repo  = "noa";
-        rev   = "1f2362f5d30e97c9f2c67871233c3f7fd2e33cf0";
-        hash  = "sha256-XkptG4x2fW9WwfL6AEbbpvqIuvW24WLKBH3cVJu5Av8=";
+        rev   = "cfd60b5a8f99725d5597168dab5aa7b976fc849f";
+        hash  = "sha256-FovrSJdVUydOZ04rYpqs4Xkvvv3199NeXTrRvoJfA4M=";
       };
   }
