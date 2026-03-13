@@ -12,12 +12,5 @@
         ];
     };
 
-  environment.systemPackages = with pkgs;
-    [ gnumake
-      gcc_multi
-      clang
-      python314
-      rustup
-      screen
-    ];
+  environment.systemPackages = [ pkgs.screen ];
 }

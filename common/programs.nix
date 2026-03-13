@@ -10,6 +10,10 @@
   environment.systemPackages = with pkgs;
     [ # devel
       git
+      nodejs pnpm esbuild
+      python3
+      stdenv clang meson
+      ghc stack
 
       # nixing
       npins

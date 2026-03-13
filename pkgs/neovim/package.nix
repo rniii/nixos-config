@@ -62,10 +62,23 @@ let
       vim-illuminate
 
       # lsp
-      ( nvim-lspconfig.overrideAttrs
+      { plug = nvim-lspconfig.overrideAttrs
           { passthru.runtimeDeps = attrVals (attrNames lspsByPackage) pkgs;
-          }
-      )
+          };
+        config = ''
+            vim.lsp.enable ${pipe lspsByPackage
+              [ attrValues
+                (concatMap toList)
+                toLua
+              ]}
+
+            vim.lsp.config("eslint", { settings = {
+              rulesCustomizations = {
+                { rule = "@stylistic/*", severity = "off", fixable = true },
+              },
+            } })
+        '';
+      }
       { plug = SchemaStore-nvim;
         config = ''
           vim.lsp.config("jsonls", { settings = { json = {
@@ -181,13 +194,6 @@ wrapNeovimUnstable neovim-unwrapped
       ( concatMap genPluginConfig (filter (p: p ? plug) pluginConfig)
           ++ genOpts "vim.opt" vimOptions
           ++ genOpts "vim.g" vimGlobals
-          ++ [ ''
-            vim.lsp.enable ${pipe lspsByPackage
-              [ attrValues
-                (concatMap toList)
-                toLua
-              ]}
-          '' ]
       );
 
     plugins = map (p: p.plug or p) pluginConfig;
