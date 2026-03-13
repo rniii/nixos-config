@@ -50,7 +50,9 @@ let
       { plug = nvim-treesitter.withPlugins (import ./grammar-list.nix);
         config = ''
           vim.api.nvim_create_autocmd("FileType", { pattern = "*", callback = function()
-            if vim.treesitter.query.get(vim.bo.filetype, "highlights") then
+            local lang = vim.treesitter.language.get_lang(vim.bo.filetype)
+
+            if vim.treesitter.query.get(lang, "highlights") then
               vim.treesitter.start()
             end
           end })
