@@ -1,11 +1,15 @@
 { lib, pkgs, ... }:
 
+let
+  sources = import ../npins;
+  pkgs-unstabler = import sources.nixpkgs-unstabler { config.allowUnfree = true; };
+in
 {
   nixpkgs.config.allowUnfreePredicate = pkg:
     builtins.elem (lib.getName pkg)
       [ "aseprite"
         "steam" "steam-unwrapped"
-        "osu-lazer-bin"
+        # "osu-lazer-bin"
       ];
 
   programs.appimage.enable = true;  # osu-lazer
@@ -37,11 +41,11 @@
       krita
       mpv
       obs-cmd
-      osu-lazer-bin
+      pkgs-unstabler.osu-lazer-bin
       prismlauncher
       syncplay
       signal-desktop
-      vesktop
+      pkgs-unstabler.vesktop
 
       # tuis
       lazygit
