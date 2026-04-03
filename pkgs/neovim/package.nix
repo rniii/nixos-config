@@ -38,12 +38,38 @@ let
       { plug = nvim-origami;
         main = "origami";
         opts.autoFold = { enabled = true; kinds = [ "imports" ]; };
+        opts.foldKeymaps.closeOnlyOnFirstColumn = true;
         config = ''
           vim.o.foldlevel = 99
           vim.o.foldlevelstart = 99
         '';
       }
-      telescope-nvim
+      { plug = quicker-nvim;
+        main = "quicker";
+        opts.keys = lib.mkLuaInline ''{
+          { ">", function() require("quicker").expand() end },
+          { "<", function() require("quicker").collapse() end },
+        }'';
+
+        config = ''
+          local quicker = require("quicker")
+
+          vim.diagnostic.handlers.qflist = {
+            show = function(ns, bufnr, diagnostics, opts)
+              local wid = vim.api.nvim_get_current_win()
+              opts.qflist.open = opts.qflist.open or false
+
+              vim.diagnostic.setqflist(opts.qflist)
+              vim.api.nvim_set_current_win(wid)
+              quicker.refresh()
+            end,
+            hide = function (ns, bufnr)
+              vim.diagnostic.setqflist { open = false }
+              quicker.refresh()
+            end,
+          }
+        '';
+      }
       vim-dirvish
 
       # highlighting
@@ -54,6 +80,7 @@ let
 
             if vim.treesitter.query.get(lang, "highlights") then
               vim.treesitter.start()
+              vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
             end
           end })
         '';
@@ -103,10 +130,6 @@ let
         opts.signature.enabled = true;
         opts.cmdline.keymap.preset = "inherit";
         opts.cmdline.completion.menu.auto_show = true;
-
-        config = ''
-          vim.lsp.config('*', { capabilities = require("blink.cmp").get_lsp_capabilities() })
-        '';
       }
 
       # editing
@@ -117,6 +140,7 @@ let
       vim-easy-align
       vim-endwise
       vim-fugitive
+      vim-qf
       vim-ragtag
       vim-repeat
       vim-rsi
@@ -157,6 +181,7 @@ let
 
   lspsByPackage =
     { ccls = "ccls";
+      emmet-language-server = "emmet_language_server";
       nixd = "nixd";
       typescript-language-server = "ts_ls";
       vscode-langservers-extracted =
@@ -167,7 +192,6 @@ let
         ];
 
       # XXX: old lsp list
-      # emmet_language_server
       # mesonlsp
       # gopls
       # hls

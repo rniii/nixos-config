@@ -19,6 +19,7 @@
       npins
 
       # sysadmin
+      ed
       nmap
       p7zip
       rsync

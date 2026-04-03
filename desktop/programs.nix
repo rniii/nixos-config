@@ -39,6 +39,7 @@
       obs-cmd
       osu-lazer-bin
       prismlauncher
+      syncplay
       signal-desktop
       vesktop
 
@@ -49,5 +50,6 @@
       # other
       ffmpeg
       qpwgraph
+      wl-clipboard
     ];
 }

@@ -21,6 +21,8 @@ in {
   environment.systemPackages =
     with pkgs.kdePackages; [ krohnkite ];
 
+  programs.kdeconnect.enable = true;
+
   nixpkgs.overlays =
     [ krohnkite-overlay
     ];
