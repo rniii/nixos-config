@@ -12,8 +12,9 @@
       git
       nodejs pnpm esbuild
       python3
-      stdenv clang meson
+      stdenv clang clang-tools meson ninja
       ghc stack
+      gdb lldb
 
       # nixing
       npins

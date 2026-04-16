@@ -140,7 +140,11 @@ let
       vim-easy-align
       vim-endwise
       vim-fugitive
-      vim-qf
+      { plug = vim-qf;
+        config = ''
+          vim.g.qf_loclist_window_bottom = 0
+        '';
+      }
       vim-ragtag
       vim-repeat
       vim-rsi
