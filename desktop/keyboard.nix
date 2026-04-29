@@ -2,7 +2,7 @@
 
 let
   xkb-patched =
-    pkgs.xorg.xkeyboardconfig.overrideAttrs
+    pkgs.xkeyboard-config.overrideAttrs
       { postPatch = ''
         cat >>symbols/jp <<EOF
 

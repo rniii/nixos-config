@@ -44,32 +44,6 @@ let
           vim.o.foldlevelstart = 99
         '';
       }
-      { plug = quicker-nvim;
-        main = "quicker";
-        opts.keys = lib.mkLuaInline ''{
-          { ">", function() require("quicker").expand() end },
-          { "<", function() require("quicker").collapse() end },
-        }'';
-
-        config = ''
-          local quicker = require("quicker")
-
-          vim.diagnostic.handlers.qflist = {
-            show = function(ns, bufnr, diagnostics, opts)
-              local wid = vim.api.nvim_get_current_win()
-              opts.qflist.open = opts.qflist.open or false
-
-              vim.diagnostic.setqflist(opts.qflist)
-              vim.api.nvim_set_current_win(wid)
-              quicker.refresh()
-            end,
-            hide = function (ns, bufnr)
-              vim.diagnostic.setqflist { open = false }
-              quicker.refresh()
-            end,
-          }
-        '';
-      }
       vim-dirvish
 
       # highlighting
@@ -80,7 +54,9 @@ let
 
             if vim.treesitter.query.get(lang, "highlights") then
               vim.treesitter.start()
-              vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+              if vim.treesitter.query.get(lang, "indents") then
+                vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+              end
             end
           end })
         '';
@@ -128,14 +104,18 @@ let
       { plug = blink-cmp;
         opts.keymap.preset = "super-tab";
         opts.signature.enabled = true;
-        opts.cmdline.keymap.preset = "inherit";
-        opts.cmdline.completion.menu.auto_show = true;
       }
 
       # editing
-      { plug = mini-pairs;
-        opts.modes.command = true;
+      { plug = nvim-autopairs;
+        opts = {};
       }
+      { plug = nvim-ts-autotag;
+        opts = {};
+      }
+      # { plug = mini-pairs;
+      #   opts.modes.command = true;
+      # }
       vim-commentary
       vim-easy-align
       vim-endwise
@@ -150,6 +130,9 @@ let
       vim-rsi
       vim-sleuth
       vim-surround
+
+      # language support
+      vim-polyglot
     ];
 
   noa-vim = callPackage ../noa-vim/package.nix
@@ -179,13 +162,11 @@ let
       undofile = true;
     };
 
-  vimGlobals =
-    { mapleader = ",";
-    };
-
   lspsByPackage =
     { ccls = "ccls";
       emmet-language-server = "emmet_language_server";
+      erlang-language-platform = "elp";
+      haskell-language-server = "hls";
       nixd = "nixd";
       typescript-language-server = "ts_ls";
       vscode-langservers-extracted =
@@ -223,7 +204,6 @@ wrapNeovimUnstable neovim-unwrapped
   { luaRcContent = concatLines
       ( concatMap genPluginConfig (filter (p: p ? plug) pluginConfig)
           ++ genOpts "vim.opt" vimOptions
-          ++ genOpts "vim.g" vimGlobals
       );
 
     plugins = map (p: p.plug or p) pluginConfig;

@@ -15,6 +15,7 @@ grammars: with grammars;
 
   # languages
   d
+  erlang
   glsl
   go
   haskell

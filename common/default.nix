@@ -12,6 +12,7 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   networking.networkmanager.enable = true;
+  networking.nftables.enable = true;
 
   services.avahi.enable = true;
   services.avahi.nssmdns4 = true;
@@ -38,5 +39,10 @@
         };
     };
 
-  nix.nixPath = with import ../npins; [ "nixpkgs=${nixpkgs}" ];
+  nix =
+    { nixPath = with import ../npins; [ "nixpkgs=${nixpkgs}" ];
+      settings =
+        { experimental-features = [ "nix-command" "flakes" ];
+        };
+    };
 }

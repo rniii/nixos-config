@@ -16,8 +16,15 @@
     "nixpkgs": {
       "type": "Channel",
       "name": "nixos-unstable",
+      "url": "https://releases.nixos.org/nixos/unstable/nixos-26.05pre980183.4bd9165a9165/nixexprs.tar.xz",
+      "hash": "sha256-Gk2T0tDDDAs319hp/ak+bAIUG5bPMvnNEjPV8CS86Fg="
+    },
+    "nixpkgs-frozen": {
+      "type": "Channel",
+      "name": "nixos-unstable",
       "url": "https://releases.nixos.org/nixos/unstable/nixos-26.05pre931542.88d3861acdd3/nixexprs.tar.xz",
-      "hash": "sha256-S/5RU76BdQ32bbE99a+G9gMuatpVWEvIfeSjEqyoFS4="
+      "hash": "sha256-S/5RU76BdQ32bbE99a+G9gMuatpVWEvIfeSjEqyoFS4=",
+      "frozen": true
     },
     "nixpkgs-unstabler": {
       "type": "Channel",

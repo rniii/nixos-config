@@ -2,17 +2,20 @@
 
 let
   sources = import ../npins;
-  pkgs-unstabler = import sources.nixpkgs-unstabler { config.allowUnfree = true; };
+  pkgs-frozen = import sources.nixpkgs-frozen { config.allowUnfree = true; };
+  # pkgs-unstabler = import sources.nixpkgs-unstabler { config.allowUnfree = true; };
 in
 {
   nixpkgs.config.allowUnfreePredicate = pkg:
     builtins.elem (lib.getName pkg)
       [ "aseprite"
         "steam" "steam-unwrapped"
-        # "osu-lazer-bin"
+        "osu-lazer-bin"
       ];
 
   programs.appimage.enable = true;  # osu-lazer
+
+  programs.nix-ld.enable = true;
 
   programs.steam =
     { enable = true;
@@ -35,17 +38,17 @@ in
 
   environment.systemPackages = with pkgs;
     [ # gui applications
-      aseprite
+      pkgs-frozen.aseprite # slow
       gimp
       keepassxc
       krita
       mpv
       obs-cmd
-      pkgs-unstabler.osu-lazer-bin
+      osu-lazer-bin
       prismlauncher
       syncplay
       signal-desktop
-      pkgs-unstabler.vesktop
+      vesktop
 
       # tuis
       lazygit
