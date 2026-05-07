@@ -2,7 +2,8 @@
 
 {
   imports =
-    [ ./programs.nix
+    [ ./networking.nix
+      ./programs.nix
     ];
 
   system.stateVersion = "25.11"; # yes, i did read the comment
@@ -10,17 +11,6 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
-
-  networking.networkmanager.enable = true;
-  networking.nftables.enable = true;
-
-  services.avahi.enable = true;
-  services.avahi.nssmdns4 = true;
-
-  services.tailscale =
-    { enable = true;
-      extraDaemonFlags = [ "--no-logs-no-support" ];
-    };
 
   services.sshd.enable = true;
 
