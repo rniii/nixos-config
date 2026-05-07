@@ -10,16 +10,11 @@
 
 let
   inherit (lib)
-    attrNames
-    attrValues
-    attrVals
     concatLines
     concatMap
     filter
     mapAttrsToList
     mapNullable
-    pipe
-    toList
     ;
 
   toLua = lib.generators.toLua { };
@@ -35,15 +30,15 @@ let
       { plug = mini-icons;
         opts = { };
       }
-      { plug = nvim-origami;
-        main = "origami";
-        opts.autoFold = { enabled = true; kinds = [ "imports" ]; };
-        opts.foldKeymaps.closeOnlyOnFirstColumn = true;
-        config = ''
-          vim.o.foldlevel = 99
-          vim.o.foldlevelstart = 99
-        '';
-      }
+      # { plug = nvim-origami;
+      #   main = "origami";
+      #   opts.autoFold = { enabled = true; kinds = [ "imports" ]; };
+      #   opts.foldKeymaps.closeOnlyOnFirstColumn = true;
+      #   config = ''
+      #     vim.o.foldlevel = 99
+      #     vim.o.foldlevelstart = 99
+      #   '';
+      # }
       vim-dirvish
 
       # highlighting
@@ -67,23 +62,46 @@ let
       vim-illuminate
 
       # lsp
-      { plug = nvim-lspconfig.overrideAttrs
-          { passthru.runtimeDeps = attrVals (attrNames lspsByPackage) pkgs;
-          };
-        config = ''
-            vim.lsp.enable ${pipe lspsByPackage
-              [ attrValues
-                (concatMap toList)
-                toLua
-              ]}
+      (let
+        runtimeDeps = with pkgs;
+          [ ccls
+            emmet-language-server
+            # erlang-language-platform
+            haskell-language-server
+            nixd
+            typescript-language-server
+            vscode-langservers-extracted
+          ];
 
-            vim.lsp.config("eslint", { settings = {
-              rulesCustomizations = {
-                { rule = "@stylistic/*", severity = "off", fixable = true },
-              },
-            } })
+        lsps =
+          [ "ccls"
+            "emmet_language_server"
+            # "elp"
+            "hls"
+            "nixd"
+            "ts_ls"
+            "cssls" "eslint" "html" "jsonls"
+          ];
+      in
+      { plug = nvim-lspconfig.overrideAttrs
+          { passthru = { inherit runtimeDeps; }; };
+        config = ''
+          vim.lsp.enable ${toLua lsps}
+
+          vim.lsp.config("eslint", { settings = {
+            rulesCustomizations = {
+              { rule = "@stylistic/*", severity = "off", fixable = true },
+            },
+          } })
+
+          vim.lsp.config("hls", {
+            filetypes = { "haskell", "lhaskell", "cabal" },
+            settings = { haskell = {
+              plugin = { stan = { globalOn = true } },
+            } },
+          })
         '';
-      }
+      })
       { plug = SchemaStore-nvim;
         config = ''
           vim.lsp.config("jsonls", { settings = { json = {
@@ -160,34 +178,6 @@ let
       ignorecase = true;
 
       undofile = true;
-    };
-
-  lspsByPackage =
-    { ccls = "ccls";
-      emmet-language-server = "emmet_language_server";
-      erlang-language-platform = "elp";
-      haskell-language-server = "hls";
-      nixd = "nixd";
-      typescript-language-server = "ts_ls";
-      vscode-langservers-extracted =
-        [ "cssls"
-          "eslint"
-          "html"
-          "jsonls"
-        ];
-
-      # XXX: old lsp list
-      # mesonlsp
-      # gopls
-      # hls
-      # ocamllsp
-      # rust_analyzer
-      # zls
-      # lua_ls
-      # efm
-      # pylsp
-      # uiua
-      # kotlin_lsp
     };
 
   genOpts = ns:

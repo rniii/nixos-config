@@ -13,7 +13,7 @@
       nodejs pnpm esbuild
       python3
       stdenv clang clang-tools meson ninja
-      erlang rebar3
+      # erlang rebar3
       ghc stack
       gdb lldb
 
