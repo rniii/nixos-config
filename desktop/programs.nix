@@ -15,8 +15,6 @@ in
 
   programs.appimage.enable = true;  # osu-lazer
 
-  programs.nix-ld.enable = true;
-
   programs.steam =
     { enable = true;
       extraCompatPackages = with pkgs;
