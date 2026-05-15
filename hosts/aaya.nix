@@ -24,10 +24,7 @@
   networking.interfaces.tailscale0.ipv4.routes =
     [ { address = "100.64.0.0"; prefixLength = 10; } ];
 
-  services.mullvad-vpn =
-    { enable = true;
-      enableExcludeWrapper = false;
-    };
+  services.mullvad-vpn.enable = true;
 
   networking.nftables.tables = {
     mullvad_tailscale = {

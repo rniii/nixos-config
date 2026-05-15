@@ -71,6 +71,7 @@ let
             nixd
             typescript-language-server
             vscode-langservers-extracted
+            yaml-language-server
           ];
 
         lsps =
@@ -81,6 +82,7 @@ let
             "nixd"
             "ts_ls"
             "cssls" "eslint" "html" "jsonls"
+            "yamlls"
           ];
       in
       { plug = nvim-lspconfig.overrideAttrs
@@ -104,6 +106,11 @@ let
           vim.lsp.config("jsonls", { settings = { json = {
             schemas = require("schemastore").json.schemas(),
             validate = { enable = true },
+          } } })
+
+          vim.lsp.config("yamlls", { settings = { yaml = {
+            schemaStore = { enable = false, url = "" },
+            schemas = require("schemastore").yaml.schemas(),
           } } })
         '';
       }
@@ -147,7 +154,11 @@ let
       vim-surround
 
       # language support
-      vim-polyglot
+      { plug = vim-polyglot;
+        config = ''
+          vim.g.haskell_indent_case_alternative = 1
+        '';
+      }
     ];
 
   noa-vim = callPackage ../noa-vim/package.nix

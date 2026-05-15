@@ -56,6 +56,9 @@ in
 
       # other
       ffmpeg
+      mpd
+      mpc
+      ncmpcpp
       qpwgraph
       (with pkgs-unstabler; rsgain.overrideAttrs
         { version = "3.7-20260322";
