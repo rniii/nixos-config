@@ -11,6 +11,7 @@ in
       [ "aseprite"
         "steam" "steam-unwrapped"
         "osu-lazer-bin"
+        "vim-polyglot"
       ];
 
   programs.appimage.enable = true;  # osu-lazer
