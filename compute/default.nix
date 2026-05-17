@@ -1,9 +1,16 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 
+
+let
+  sources = import ../npins;
+in
 {
   imports =
-    [ ../common
+    with import ../npins;
+    [ ../common/default.nix
     ];
+
+  networking.firewall.enable = true;
 
   users.users.openbench =
     { isNormalUser = true;
@@ -12,5 +19,7 @@
         ];
     };
 
-  environment.systemPackages = [ pkgs.screen ];
+  environment.systemPackages = with pkgs;
+    [ screen
+    ];
 }
