@@ -30,15 +30,6 @@ let
       { plug = mini-icons;
         opts = { };
       }
-      # { plug = nvim-origami;
-      #   main = "origami";
-      #   opts.autoFold = { enabled = true; kinds = [ "imports" ]; };
-      #   opts.foldKeymaps.closeOnlyOnFirstColumn = true;
-      #   config = ''
-      #     vim.o.foldlevel = 99
-      #     vim.o.foldlevelstart = 99
-      #   '';
-      # }
       vim-dirvish
 
       # highlighting
@@ -59,7 +50,6 @@ let
       { plug = nvim-highlight-colors;
         opts = { };
       }
-      vim-illuminate
 
       # lsp
       (let
@@ -99,6 +89,14 @@ let
           vim.lsp.config("hls", {
             filetypes = { "haskell", "lhaskell", "cabal" },
           })
+
+          vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, { callback = function()
+            vim.lsp.buf.document_highlight()
+          end })
+
+          vim.api.nvim_create_autocmd("CursorMoved", { callback = function()
+            vim.lsp.buf.clear_references()
+          end })
         '';
       })
       { plug = SchemaStore-nvim;

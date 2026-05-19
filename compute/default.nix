@@ -1,12 +1,7 @@
-{ lib, pkgs, ... }:
+{ pkgs, ... }:
 
-
-let
-  sources = import ../npins;
-in
 {
   imports =
-    with import ../npins;
     [ ../common/default.nix
     ];
 

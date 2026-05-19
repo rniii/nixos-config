@@ -54,10 +54,14 @@ in
       (callPackage ../pkgs/neovim/package.nix { })
 
       # other
+      aria2
       ffmpeg
       mpd
+      mpd-mpris
       mpc
-      ncmpcpp
+      (ncmpcpp.override
+        { visualizerSupport = true;
+        })
       qpwgraph
       (with pkgs-unstabler; rsgain.overrideAttrs
         { version = "3.7-20260322";
