@@ -31,6 +31,23 @@ let
         opts = { };
       }
       vim-dirvish
+      (vim-illuminate.overrideAttrs
+        { patches = [ (builtins.toFile "yaqia-pull-251.diff" ''
+            diff --git a/lua/illuminate/providers/lsp.lua b/lua/illuminate/providers/lsp.lua
+            index c401b7e..f956796 100644
+            --- a/lua/illuminate/providers/lsp.lua
+            +++ b/lua/illuminate/providers/lsp.lua
+            @@ -8,7 +8,7 @@ local function _str_byteindex_enc(line, col, encoding)
+                 end
+
+                 if vim.fn.has('nvim-0.11') == 1 then
+            -        return vim.str_byteindx(line, encoding, col, false)
+            +        return vim.str_byteindex(line, encoding, col, false)
+                 end
+
+                 if encoding == 'utf-8' then
+          '') ];
+        })
 
       # highlighting
       { plug = nvim-treesitter.withPlugins (import ./grammar-list.nix);
@@ -89,14 +106,6 @@ let
           vim.lsp.config("hls", {
             filetypes = { "haskell", "lhaskell", "cabal" },
           })
-
-          vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, { callback = function()
-            vim.lsp.buf.document_highlight()
-          end })
-
-          vim.api.nvim_create_autocmd("CursorMoved", { callback = function()
-            vim.lsp.buf.clear_references()
-          end })
         '';
       })
       { plug = SchemaStore-nvim;
@@ -133,9 +142,6 @@ let
       { plug = nvim-ts-autotag;
         opts = {};
       }
-      # { plug = mini-pairs;
-      #   opts.modes.command = true;
-      # }
       vim-commentary
       vim-easy-align
       vim-endwise
