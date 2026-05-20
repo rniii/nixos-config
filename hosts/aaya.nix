@@ -1,5 +1,9 @@
 { lib, ... }:
 
+let
+  sources = import ../npins;
+  pkgs-frozen = import sources.nixpkgs-frozen {};
+in
 {
   imports =
     with import ../npins;
@@ -10,6 +14,8 @@
       "${nixos-hardware}/common/gpu/amd"
       "${nixos-hardware}/common/cpu/amd/pstate.nix"
     ];
+
+  boot.kernelPackages = lib.mkForce pkgs-frozen.linuxPackages_latest;
 
   networking.hostName = "aaya";
   i18n.defaultLocale = lib.mkForce "ja_JP.UTF-8";
