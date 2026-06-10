@@ -19,7 +19,12 @@ in {
     with pkgs.kdePackages; [ plasma-browser-integration kwin-x11 ];
 
   environment.systemPackages =
-    with pkgs.kdePackages; [ krohnkite ];
+    with pkgs;
+    [ kdePackages.krohnkite
+      kurve
+      plasmusic-toolbar
+      qt6.qtwebengine
+    ];
 
   programs.kdeconnect.enable = true;
 

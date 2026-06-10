@@ -24,6 +24,13 @@ in
 
   services.broadcast-box.enable = true;
 
+  services.sunshine =
+    { enable       = true;
+      openFirewall = true;
+      capSysAdmin  = true;
+      autoStart    = false;
+    };
+
   services.tailscale.extraSetFlags =
     [ "--accept-dns=false" "--accept-routes=false" ];
 

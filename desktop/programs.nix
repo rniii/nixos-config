@@ -38,9 +38,11 @@ in
   environment.systemPackages = with pkgs;
     [ # gui applications
       pkgs-frozen.aseprite # slow
+      darktable
       gimp
       keepassxc
       krita
+      mesa-demos
       mpv
       obs-cmd
       osu-lazer-bin
@@ -62,6 +64,7 @@ in
       (ncmpcpp.override
         { visualizerSupport = true;
         })
+      playerctl
       qpwgraph
       (with pkgs-unstabler; rsgain.overrideAttrs
         { version = "3.7-20260322";
