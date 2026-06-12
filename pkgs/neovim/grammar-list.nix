@@ -7,6 +7,7 @@ grammars: with grammars;
   jsdoc
   tsx
   typescript
+  vue
 
   # c
   c

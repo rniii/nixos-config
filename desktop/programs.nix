@@ -54,6 +54,8 @@ in
       # tuis
       lazygit
       (callPackage ../pkgs/neovim/package.nix { })
+      taskwarrior3
+      timewarrior
 
       # other
       aria2

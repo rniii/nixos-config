@@ -78,6 +78,7 @@ let
             nixd
             typescript-language-server
             vscode-langservers-extracted
+            vue-language-server
             yaml-language-server
           ];
 
@@ -89,6 +90,7 @@ let
             "nixd"
             "ts_ls"
             "cssls" "eslint" "html" "jsonls"
+            "vue_ls"
             "yamlls"
           ];
       in
@@ -105,6 +107,20 @@ let
 
           vim.lsp.config("hls", {
             filetypes = { "haskell", "lhaskell", "cabal" },
+          })
+
+          vim.lsp.config('ts_ls', {
+            init_options = {
+              plugins = { {
+                name = '@vue/typescript-plugin',
+                location = ${
+                  toLua "${pkgs.vue-language-server}/lib/language-tools/packages/language-server"
+                },
+                languages = { 'vue' },
+                configNamespace = 'typescript',
+              } },
+            },
+            filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
           })
         '';
       })
