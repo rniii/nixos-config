@@ -28,6 +28,7 @@ grammars: with grammars;
   python
   ruby
   rust
+  sql
 
   # data
   json

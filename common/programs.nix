@@ -23,8 +23,10 @@
       # sysadmin
       dig
       ed
+      inetutils
       nmap
       p7zip
+      sqlite-interactive
       rsync
       tree
       vim
@@ -42,6 +44,7 @@
       asar
       binutils
       file
+      patchelf
       radare2
       strace
 
