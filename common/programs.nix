@@ -12,7 +12,7 @@
       git
       nodejs pnpm esbuild
       python3
-      stdenv clang clang-tools meson ninja
+      stdenv clang clang-tools meson ninja pkg-config
       # erlang rebar3
       ghc stack
       gdb lldb
@@ -46,6 +46,7 @@
       file
       patchelf
       radare2
+      socat
       strace
 
       # doc

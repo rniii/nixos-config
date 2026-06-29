@@ -14,7 +14,9 @@
   networking.hostName = "aaya";
   i18n.defaultLocale = lib.mkForce "ja_JP.UTF-8";
   programs.firefox.languagePacks = [ "ja" ];
+
   hardware.bluetooth.enable = true;
+  hardware.opentabletdriver.enable = true;
 
   services.broadcast-box.enable = true;
 
