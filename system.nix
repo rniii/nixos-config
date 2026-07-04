@@ -3,7 +3,7 @@ let
 
   lib = import "${nixpkgs}/lib";
 in
-  lib.genAttrs [ "aaya" "compute2" "testvm" "tulip" ] (host:
+  lib.genAttrs [ "aaya" "atri" "compute2" "testvm" "tulip" ] (host:
     import "${nixpkgs}/nixos"
       { configuration = ./hosts/${host}.nix;
       })
