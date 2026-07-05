@@ -16,7 +16,6 @@
   programs.firefox.languagePacks = [ "ja" ];
 
   hardware.bluetooth.enable = true;
-  hardware.opentabletdriver.enable = true;
 
   services.broadcast-box.enable = true;
 
@@ -35,17 +34,17 @@
 
   services.mullvad-vpn.enable = true;
 
+  networking.firewall.checkReversePath = "loose";
+
   networking.nftables.tables = {
-    mullvad_tailscale = {
+    mullvad-tailscale = {
       family = "inet";
       content = ''
         chain output {
-          type route hook output priority -100; policy accept;
-          ip daddr 100.64.0.0/10 ct mark set 0x00000f41 meta mark set 0x6d6f6c65;
+          ip daddr 100.64.0.0/10 accept
         }
         chain input {
-          type filter hook input priority -100; policy accept;
-          ip saddr 100.64.0.0/10 ct mark set 0x00000f41 meta mark set 0x6d6f6c65;
+          ip saddr 100.64.0.0/10 accept
         }
       '';
     };
