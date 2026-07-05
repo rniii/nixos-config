@@ -11,9 +11,30 @@
     ];
 
   networking.hostName = "tulip";
+  networking.firewall.checkReversePath = "loose";
+
+  services.mullvad-vpn.enable = true;
+  networking.interfaces.tailscale0.ipv4.routes =
+   [ { address = "100.64.0.0"; prefixLength = 10; } ];
 
   services.tailscale.extraSetFlags =
     [ "--accept-dns=false" "--accept-routes=false" ];
+
+  networking.nftables.tables = {
+    mullvad_tailscale = {
+      family = "inet";
+      content = ''
+        chain output {
+          type route hook output priority -100; policy accept;
+          oifname "tailscale0" ct mark set 0x00000f41 meta mark set 0x6d6f6c65
+        }
+        chain prerouting {
+          type filter hook prerouting priority -100; policy accept;
+          ip saddr 100.64.0.0/10 ct mark set 0x00000f41 meta mark set 0x6d6f6c65;
+        }
+      '';
+    };
+  };
 
   # nixos-generate-config --show-hardware-config
 
