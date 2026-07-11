@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, pkgs, ... }:
 
 {
   imports =
@@ -9,6 +9,10 @@
       "${nixos-hardware}/common/cpu/amd"
       "${nixos-hardware}/common/gpu/amd"
       "${nixos-hardware}/common/cpu/amd/pstate.nix"
+    ];
+
+  environment.systemPackages = with pkgs;
+    [ (callPackage ../pkgs/letta-code/package.nix { })
     ];
 
   networking.hostName = "aaya";

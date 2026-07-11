@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ pkgs, ... }:
 
 let
   sources = import ../npins;
@@ -6,14 +6,6 @@ let
   pkgs-unstabler = import sources.nixpkgs-unstabler { config.allowUnfree = true; };
 in
 {
-  nixpkgs.config.allowUnfreePredicate = pkg:
-    builtins.elem (lib.getName pkg)
-      [ "aseprite"
-        "steam" "steam-unwrapped"
-        "osu-lazer-bin"
-        "vim-polyglot"
-      ];
-
   programs.appimage.enable = true;  # osu-lazer
 
   programs.steam =
@@ -60,6 +52,7 @@ in
       # other
       aria2
       ffmpeg
+      pkgs-frozen.jiten
       mpd
       mpd-mpris
       mpc
