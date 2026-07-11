@@ -31,7 +31,7 @@
     };
 
   services.tailscale.extraSetFlags =
-    [ "--accept-dns=false" "--accept-routes=false" ];
+    [ "--accept-dns=false" "--accept-routes=false" "--netfilter-mode=off" ];
 
   networking.interfaces.tailscale0.ipv4.routes =
     [ { address = "100.64.0.0"; prefixLength = 10; } ];
@@ -44,11 +44,16 @@
     mullvad-tailscale = {
       family = "inet";
       content = ''
-        chain output {
-          ip daddr 100.64.0.0/10 accept
+        chain prerouting {
+          type filter hook prerouting priority -100; policy accept;
+          # stamp Mullvad's bypass marks onto tailnet traffic before Mullvad's chains evaluate it
+          # ct mark 0x00000f41 = Mullvad "accept" mark, meta mark 0x6d6f6c65 = routing bypass ("mole")
+          ip saddr 100.64.0.0/10 ct mark set 0x00000f41 meta mark set 0x6d6f6c65
+          ip daddr 100.64.0.0/10 ct mark set 0x00000f41 meta mark set 0x6d6f6c65
         }
-        chain input {
-          ip saddr 100.64.0.0/10 accept
+        chain outgoing {
+          type route hook output priority -100; policy accept;
+          ip daddr 100.64.0.0/10 ct mark set 0x00000f41 meta mark set 0x6d6f6c65
         }
       '';
     };
