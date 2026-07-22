@@ -31,26 +31,11 @@ let
         opts = { };
       }
       vim-dirvish
-      (vim-illuminate.overrideAttrs
-        { patches = [ (builtins.toFile "yaqia-pull-251.diff" ''
-            diff --git a/lua/illuminate/providers/lsp.lua b/lua/illuminate/providers/lsp.lua
-            index c401b7e..f956796 100644
-            --- a/lua/illuminate/providers/lsp.lua
-            +++ b/lua/illuminate/providers/lsp.lua
-            @@ -8,7 +8,7 @@ local function _str_byteindex_enc(line, col, encoding)
-                 end
+      vim-illuminate
+    ];
 
-                 if vim.fn.has('nvim-0.11') == 1 then
-            -        return vim.str_byteindx(line, encoding, col, false)
-            +        return vim.str_byteindex(line, encoding, col, false)
-                 end
-
-                 if encoding == 'utf-8' then
-          '') ];
-        })
-
-      # highlighting
-      { plug = nvim-treesitter.withPlugins (import ./grammar-list.nix);
+  syntaxPlugins = with vimPlugins;
+    [ { plug = nvim-treesitter.withPlugins (import ./grammar-list.nix);
         config = ''
           vim.api.nvim_create_autocmd("FileType", { pattern = "*", callback = function()
             local lang = vim.treesitter.language.get_lang(vim.bo.filetype)

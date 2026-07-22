@@ -16,11 +16,13 @@
       # erlang rebar3
       ghc stack
       gdb lldb
+      nasm
 
       # nixing
       npins
 
       # sysadmin
+      bubblewrap
       dig
       ed
       inetutils
