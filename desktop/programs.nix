@@ -3,7 +3,6 @@
 let
   sources = import ../npins;
   pkgs-frozen = import sources.nixpkgs-frozen { config.allowUnfree = true; };
-  pkgs-unstabler = import sources.nixpkgs-unstabler { config.allowUnfree = true; };
 in
 {
   programs.appimage.enable = true;  # osu-lazer
@@ -17,8 +16,21 @@ in
   programs.obs-studio =
     { enable = true;
       enableVirtualCamera = true;
-      plugins = with pkgs.obs-studio-plugins;
-        [ input-overlay ];
+      plugins = with pkgs.obs-studio-plugins; [
+        input-overlay
+        # obs-multi-rtmp
+      ];
+    };
+
+  programs.neovim =
+    { enableLspPlugins = true;
+      vimOptions =
+        { guifont = "Sarasa Term J";
+        };
+      vimGlobals =
+        { neovide_floating_blur_amount_x = 0;
+          neovide_floating_blur_amount_y = 0;
+        };
     };
 
   environment.variables =
@@ -36,6 +48,7 @@ in
       krita
       mesa-demos
       mpv
+      neovide
       obs-cmd
       osu-lazer-bin
       prismlauncher
@@ -45,7 +58,6 @@ in
 
       # tuis
       lazygit
-      (callPackage ../pkgs/neovim/package.nix { })
       taskwarrior3
       timewarrior
 
@@ -53,16 +65,18 @@ in
       aria2
       ffmpeg
       pkgs-frozen.jiten
+      listenbrainz-mpd
       mpd
       mpd-mpris
       mpc
       (ncmpcpp.override
         { visualizerSupport = true;
         })
+      pi-coding-agent
       playerctl
       qpwgraph
       rsgain
       wl-clipboard
-      pkgs-unstabler.yt-dlp
+      yt-dlp
     ];
 }

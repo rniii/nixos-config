@@ -1,6 +1,6 @@
-{ buildVimPlugin, fetchFromGitHub }:
+{ vimUtils, fetchFromGitHub }:
 
-buildVimPlugin
+vimUtils.buildVimPlugin
   { pname   = "twoslash-queries.nvim";
     version = "0-unstable-2026-09-26";
 

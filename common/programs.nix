@@ -1,6 +1,10 @@
 { pkgs, ... }:
 
 {
+  imports =
+    [ ./neovim
+    ];
+
   documentation.dev.enable = true;
 
   programs.mosh.enable = true;
