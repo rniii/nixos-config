@@ -7,7 +7,7 @@ if vim.o.background == "light" then
   palette = {
     bg00 = "#fdf9fe", fg00 = "#958296",
     bg01 = "#ede8f4", fg01 = "#573e59",
-    bg02 = "#f4e8ef", fg02 = "#40344f",
+    bg02 = "#d7d9e8", fg02 = "#40344f",
 
     constant  = "#ea46c4",
     error     = "#d1301b",
@@ -66,10 +66,10 @@ hi("CursorLineSign",  { bg = palette.bg01, fg = palette.fg00 })
 hi("CursorColumn",    { link = "CursorLine" })
 hi("ColorColumn",     { link = "CursorLine" })
 hi("Visual",          { bg = palette.bg02 })
-hi("StatusLine",      { fg = palette.fg02, bg = palette.bg02 })
-hi("StatusLineNC",    { fg = palette.fg01, bg = palette.bg01 })
-hi("PmenuSel",        { link = "StatusLine" })
-hi("Pmenu",           { link = "StatusLineNC" })
+hi("StatusLine",      { fg = palette.fg02, bg = palette.bg01 })
+hi("StatusLineNC",    { fg = palette.fg00, bg = palette.bg02 })
+hi("Pmenu",           { bg = palette.bg01 })
+hi("PmenuSel",        { bg = palette.bg02 })
 hi("TabLine",         { bg = palette.bg01 })
 hi("TabLineSel",      { bg = palette.bg00, bold = true })
 hi("WinBar",          { link = "TabLineSel" })

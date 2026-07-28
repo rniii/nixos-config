@@ -15,8 +15,7 @@ let
 
   # XXX: remove these things from toplevel later
   uiPlugins = with pkgs.vimPlugins;
-    [ base16-nvim
-      { plug = fidget-nvim;
+    [ { plug = fidget-nvim;
         main = "fidget";
         opts.progress.display.progress_icon = [ "noise" ];
       }
@@ -54,7 +53,8 @@ let
     ];
 
   genericPlugins = with pkgs.vimPlugins;
-    [ { plug = nvim-autopairs;
+    [ neov-ime-nvim
+      { plug = nvim-autopairs;
         opts = {};
       }
       { plug = nvim-ts-autotag;
@@ -169,6 +169,10 @@ let
 
   twoslash-queries-nvim = pkgs.callPackage
     ../../pkgs/twoslash-queries-nvim/package.nix
+    { };
+
+  neov-ime-nvim = pkgs.callPackage
+    ../../pkgs/neov-ime-nvim/package.nix
     { };
 
   genOpts = ns:
