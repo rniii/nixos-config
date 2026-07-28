@@ -75,7 +75,16 @@ in
       pi-coding-agent
       playerctl
       qpwgraph
-      rsgain
+      (rsgain.overrideAttrs
+        { version = "3.7-20260322";
+          src = pkgs.fetchFromGitHub
+            { owner = "complexlogic";
+              repo  = "rsgain";
+              rev   = "bf7aa405de39bcf419b81f064902d5235834cb3a";
+              hash  = "sha256-d9wEe5QQX0Kq7+FhG2vp5ICvpyX8E/zd6mgLk/tbCxE=";
+            };
+        }
+      )
       wl-clipboard
       yt-dlp
     ];
