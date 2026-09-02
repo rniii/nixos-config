@@ -7,11 +7,7 @@ vimUtils.buildVimPlugin
     src = fetchFromGitHub
       { owner = "sevenc-nanashi";
         repo  = "neov-ime.nvim";
-        rev   = "9d1dd789761fb3aadf91cdfed0cebcb750424380";
-        hash  = "sha256-WtzKmhxhVupRRVe0fUyjV3js+WIVGU+8glg/mHHNeQ8=";
+        rev   = "d4e030486d446419d836b1daa954cd1fbcb6a75e";
+        hash  = "sha256-Z9544Yb3cXSzmxLERvq3bAFBGi7nYIQfNYygrDL0R9w=";
       };
-
-    postPatch = ''
-      sed -i '1 s/\*neov-ime\* //' doc/neov-ime.txt
-    '';
   }
