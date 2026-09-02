@@ -14,7 +14,7 @@
   environment.systemPackages = with pkgs;
     [ # devel
       git
-      nodejs pnpm esbuild
+      nodejs pnpm esbuild typescript
       python3
       stdenv clang clang-tools meson ninja pkg-config
       # erlang rebar3

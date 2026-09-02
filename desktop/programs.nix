@@ -30,6 +30,8 @@ in
       vimGlobals =
         { neovide_floating_blur_amount_x = 0;
           neovide_floating_blur_amount_y = 0;
+          neovide_scroll_animation_length = 0;
+          neovide_experimental_layer_grouping = true;
         };
     };
 

@@ -1,20 +1,20 @@
 local severity = vim.diagnostic.severity
 
-local function buflist()
-  local current
-  local list = {}
-  local cbuf = vim.fn.bufnr()
+-- local function buflist()
+--   local current
+--   local list = {}
+--   local cbuf = vim.fn.bufnr()
 
-  for i = 1, vim.fn.bufnr("$") do
-    if vim.fn.buflisted(i) == 1 then
-      if i == cbuf then current = #list + 1 end
+--   for i = 1, vim.fn.bufnr("$") do
+--     if vim.fn.buflisted(i) == 1 then
+--       if i == cbuf then current = #list + 1 end
 
-      list[#list + 1] = i
-    end
-  end
+--       list[#list + 1] = i
+--     end
+--   end
 
-  return list, current
-end
+--   return list, current
+-- end
 
 local function hl(text, group)
   return (group and "%#" .. group .. "#" or "%*") .. text
@@ -45,29 +45,7 @@ function M.statusline()
 end
 
 function M.tabline(bufnr)
-  local list, current = buflist()
-  local line = ""
-
-  local bufstart = 1
-  local bufend = #list
-
-  local maxbuf = math.floor((vim.o.columns - 4) / 24)
-
-  if #list > maxbuf then
-    if current > maxbuf then
-      bufstart = current
-    end
-
-    bufend = bufstart + maxbuf
-  end
-
-  for i = bufstart, bufend do
-    local bufnr = list[i]
-
-    line = line .. "%{%v:lua.require'ui'.tab(" .. bufnr .. ")%}"
-  end
-
-  return line .. hl("", "TabLineFill")
+  return ""
 end
 
 function M.winbar()
@@ -113,41 +91,6 @@ function M.status_diffstatus()
   end
 
   return text
-end
-
---- Tabline components ------------------------------------
-
-function M.tab_bufname(bufnr)
-  local name = vim.api.nvim_buf_call(bufnr, function()
-    return vim.fn.pathshorten(vim.api.nvim_eval_statusline("%f", { }).str)
-  end)
-
-  if strwidth(name) > 14 then
-    local ext = vim.fn.fnamemodify(name, ":e")
-    local suffix = ext == "" and "" or "." .. ext
-
-    name = truncate(name, 14 - strwidth(suffix)) .. suffix
-  end
-
-  return name
-end
-
-function M.tab(bufnr)
-  local dot = vim.fn.getbufvar(bufnr, "&modified") == 1 and "●" or "○"
-  local current = vim.fn.bufnr()
-  local diagnostics = vim.diagnostic.count(bufnr)
-  local group =
-    bufnr == current and "TabLineSel" or
-    diagnostics[severity.ERROR] and "DiagnosticUnderlineError" or
-    diagnostics[severity.WARN] and "DiagnosticUnderlineWarn"
-
-  return " "
-      .. hl(
-        "%-14.14(%{v:lua.require'ui'.tab_bufname(" .. bufnr .. ")}%*%)",
-        group)
-      .. " "
-      .. hl(dot)
-      .. " "
 end
 
 return M
