@@ -11,10 +11,6 @@
       "${nixos-hardware}/common/cpu/amd/pstate.nix"
     ];
 
-  environment.systemPackages = with pkgs;
-    [ (callPackage ../pkgs/letta-code/package.nix { })
-    ];
-
   networking.hostName = "aaya";
   i18n.defaultLocale = lib.mkForce "ja_JP.UTF-8";
   programs.firefox.languagePacks = [ "ja" ];
