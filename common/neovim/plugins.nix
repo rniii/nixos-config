@@ -20,7 +20,7 @@ in (
                     progress.display.progress_icon = [ "noise" ];
                 })
                 gitsigns-nvim
-                (mkPlugin mini-icons)
+                (mkPlugin mini-icons {})
                 vim-dirvish
                 vim-illuminate
             ];

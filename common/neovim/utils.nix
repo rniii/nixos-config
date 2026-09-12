@@ -7,9 +7,9 @@ let
     uncurryProperties = foldr uncurryProperty' {};
 
     # mkPlugin plug                 == mkPlugin plug null null null
-    # mkPlugin plug { }             == mkPlugin plug null { } null
+    # mkPlugin plug { }             == mkPlugin plug plug.pname { } null
     # mkPlugin plug ./init.lua      == mkPlugin plug null null ./init.lua
-    # mkPlugin plug { } ./init.lua  == mkPlugin plug null { } ./init.lua
+    # mkPlugin plug { } ./init.lua  == mkPlugin plug plug.pname { } ./init.lua
     # mkPlugin plug "main" { }      == mkPlugin plug "main" { } null
     # mkPlugin plug "main" { } ./init.lua
     mkPlugin = plug: {
@@ -21,7 +21,7 @@ let
             if builtins.isPath main then
                 mkPlugin' null null main
             else if builtins.isAttrs main then
-                mkPlugin' null main
+                mkPlugin' plug.pname main
             else opts:
                 mkPlugin' main opts;
     };

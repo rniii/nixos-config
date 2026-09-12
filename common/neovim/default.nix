@@ -27,7 +27,9 @@ let
         mapAttrsToList (opt: val: "${ns}.${opt} = ${toLua val}");
 
     genPluginConfig =
-        { plug, main ? plug.pname, opts ? null, init ? null, ... }:
+        { main ? null, opts ? null, init ? null, ... }:
+
+        assert opts != null -> main != null;
 
         filter (c: c != null) [
             (if builtins.isPath init then builtins.readFile init else init)
