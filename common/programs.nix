@@ -35,7 +35,9 @@
       sqlite-interactive
       rsync
       tree
+      unzip
       vim
+      zip
 
       # shell
       ascii
