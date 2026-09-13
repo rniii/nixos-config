@@ -5,22 +5,9 @@ let
 
     utils = pkgs.callPackage ./utils.nix {};
 
-    inherit (utils) mkPlugin mkServer;
-
-    twoslash-queries-nvim = pkgs.callPackage
-        ../../pkgs/twoslash-queries-nvim/package.nix
-        { };
+    inherit (utils) mkServer;
 in (
     lib.mkIf cfg.enableLspPlugins {
-        programs.neovim.plugins = with pkgs.vimPlugins; [
-            (mkPlugin SchemaStore-nvim ./schemastore-nvim.lua)
-            (mkPlugin twoslash-queries-nvim ./twoslash-queries-nvim.lua)
-            (mkPlugin blink-cmp {
-                keymap.preset = "super-tab";
-                signature.enabled = true;
-            })
-        ];
-
         programs.neovim.languageServers = with pkgs; [
             (mkServer ccls)
             (mkServer emmet-language-server "emmet_language_server")

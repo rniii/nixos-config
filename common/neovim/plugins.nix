@@ -1,6 +1,8 @@
-{ lib, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 let
+    cfg = config.programs.neovim;
+
     utils = pkgs.callPackage ./utils.nix {};
 
     inherit (utils) mkPlugin;
@@ -11,6 +13,10 @@ let
     neov-ime-nvim = pkgs.callPackage
         ../../pkgs/neov-ime-nvim/package.nix
         { };
+
+    twoslash-queries-nvim = pkgs.callPackage
+        ../../pkgs/twoslash-queries-nvim/package.nix
+        { };
 in (
     lib.mkMerge [
         {
@@ -19,30 +25,27 @@ in (
                     notification.window.blend = 0;
                     progress.display.progress_icon = [ "noise" ];
                 })
-                gitsigns-nvim
                 (mkPlugin mini-icons {})
-                vim-dirvish
+                (mkPlugin oil-nvim "oil" {} ./oil-nvim.lua)
+                (mkPlugin oil-git-status-nvim "oil-git-status" {})
+                gitsigns-nvim
                 vim-illuminate
-            ];
-        }
-        {
-            programs.neovim.plugins = with pkgs.vimPlugins; [
+
                 (mkPlugin nvim-treesitter-wrapped ./nvim-treesitter.lua)
                 (mkPlugin nvim-highlight-colors { })
                 (mkPlugin vim-polyglot ./vim-polyglot.lua)
-            ];
-        }
-        {
-            programs.neovim.plugins = with pkgs.vimPlugins; [
-                (mkPlugin nvim-autopairs { })
-                (mkPlugin nvim-ts-autotag { })
-                (mkPlugin scope-nvim "scope" { })
+
+                (mkPlugin better-escape-nvim "better_escape" {})
                 (mkPlugin neov-ime-nvim ./neov-ime.lua)
+                (mkPlugin nvim-autopairs {})
+                (mkPlugin nvim-ts-autotag {})
+                (mkPlugin scope-nvim "scope" {})
+                (mkPlugin ts-comments-nvim "ts-comments" {})
+                (mkPlugin vim-qf ./vim-qf.lua)
                 vim-commentary
                 vim-easy-align
                 vim-endwise
                 vim-fugitive
-                (mkPlugin vim-qf ./vim-qf.lua)
                 vim-ragtag
                 vim-repeat
                 vim-rsi
@@ -50,6 +53,16 @@ in (
                 vim-surround
             ];
         }
+        (lib.mkIf cfg.enableLspPlugins {
+            programs.neovim.plugins = with pkgs.vimPlugins; [
+                (mkPlugin SchemaStore-nvim ./schemastore-nvim.lua)
+                (mkPlugin twoslash-queries-nvim ./twoslash-queries-nvim.lua)
+                (mkPlugin blink-cmp {
+                    keymap.preset = "super-tab";
+                    signature.enabled = true;
+                })
+            ];
+        })
     ]
 )
 
