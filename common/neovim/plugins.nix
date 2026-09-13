@@ -26,7 +26,9 @@ in (
                     progress.display.progress_icon = [ "noise" ];
                 })
                 (mkPlugin mini-icons {})
-                (mkPlugin oil-nvim "oil" {} ./oil-nvim.lua)
+                (mkPlugin oil-nvim "oil" {
+                    win_options.signcolumn = "yes";
+                } ./oil-nvim.lua)
                 (mkPlugin oil-git-status-nvim "oil-git-status" {})
                 gitsigns-nvim
                 vim-illuminate
@@ -35,12 +37,10 @@ in (
                 (mkPlugin nvim-highlight-colors { })
                 (mkPlugin vim-polyglot ./vim-polyglot.lua)
 
-                (mkPlugin better-escape-nvim "better_escape" {})
                 (mkPlugin neov-ime-nvim ./neov-ime.lua)
                 (mkPlugin nvim-autopairs {})
                 (mkPlugin nvim-ts-autotag {})
                 (mkPlugin scope-nvim "scope" {})
-                (mkPlugin ts-comments-nvim "ts-comments" {})
                 (mkPlugin vim-qf ./vim-qf.lua)
                 vim-commentary
                 vim-easy-align
