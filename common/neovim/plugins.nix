@@ -34,10 +34,10 @@ in (
         }
         {
             programs.neovim.plugins = with pkgs.vimPlugins; [
-                neov-ime-nvim
                 (mkPlugin nvim-autopairs { })
                 (mkPlugin nvim-ts-autotag { })
                 (mkPlugin scope-nvim "scope" { })
+                (mkPlugin neov-ime-nvim ./neov-ime.lua)
                 vim-commentary
                 vim-easy-align
                 vim-endwise

@@ -16,6 +16,7 @@
       git
       nodejs pnpm esbuild typescript
       python3
+      luajit
       stdenv clang clang-tools meson ninja pkg-config
       # erlang rebar3
       ghc stack
