@@ -53,9 +53,11 @@ in {
         neovide
         obs-cmd
         osu-lazer-bin
+        picard
         prismlauncher
-        syncplay
         signal-desktop
+        strawberry
+        syncplay
         vesktop
 
         # tuis
@@ -67,7 +69,15 @@ in {
         aria2
         ffmpeg
         pkgs-frozen.jiten
-        listenbrainz-mpd
+        (listenbrainz-mpd.overrideAttrs (finalAttrs: {
+            postPatch = ''
+                substituteInPlace listenbrainz-mpd.service --replace-fail \
+                    "ExecStart=/usr/bin/" "ExecStart=$out/bin/"
+            '';
+            postInstall = finalAttrs.postInstall + ''
+                install -Dm644 listenbrainz-mpd.service -t $out/lib/systemd/user
+            '';
+        }))
         mpd
         mpd-mpris
         mpc
