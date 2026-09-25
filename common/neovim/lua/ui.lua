@@ -55,7 +55,7 @@ end
 --- Statusline components ---------------------------------
 
 function M.status_bufname()
-  local icon, icon_hl = MiniIcons.get("filetype", vim.bo.filetype)
+  local icon, icon_hl = MiniIcons.get("file", vim.fn.bufname() or "")
 
   return hl(icon .. " ", icon_hl) .. hl("%f") .. hl("%h%w%m%r", "NonText")
 end
