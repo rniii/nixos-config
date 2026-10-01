@@ -1,65 +1,61 @@
 { pkgs, ... }:
 
 {
-  imports =
-    [ ./neovim
-    ];
+    documentation.dev.enable = true;
 
-  documentation.dev.enable = true;
+    programs.mosh.enable = true;
+    programs.nano.enable = false;
+    programs.neovim.enable = true;
 
-  programs.mosh.enable = true;
-  programs.nano.enable = false;
-  programs.neovim.enable = true;
+    environment.systemPackages = with pkgs; [
+        # devel
+        git
+        nodejs pnpm esbuild typescript
+        python3
+        luajit
+        stdenv clang clang-tools meson ninja pkg-config
+        # erlang rebar3
+        ghc stack
+        gdb lldb
+        nasm
 
-  environment.systemPackages = with pkgs;
-    [ # devel
-      git
-      nodejs pnpm esbuild typescript
-      python3
-      luajit
-      stdenv clang clang-tools meson ninja pkg-config
-      # erlang rebar3
-      ghc stack
-      gdb lldb
-      nasm
+        # nixing
+        npins
 
-      # nixing
-      npins
+        # sysadmin
+        bubblewrap
+        dig
+        ed
+        inetutils
+        nmap
+        p7zip
+        sqlite-interactive
+        rsync
+        tree
+        unzip
+        vim
+        zip
 
-      # sysadmin
-      bubblewrap
-      dig
-      ed
-      inetutils
-      nmap
-      p7zip
-      sqlite-interactive
-      rsync
-      tree
-      unzip
-      vim
-      zip
+        # shell
+        ascii
+        cowsay
+        hyperfine
+        jp2a
+        jq
+        libqalculate # qalc cli
+        ripgrep
 
-      # shell
-      ascii
-      cowsay
-      hyperfine
-      jp2a
-      jq
-      libqalculate # qalc cli
-      ripgrep
+        # pokey tools
+        asar
+        binutils
+        file
+        patchelf
+        radare2
+        socat
+        strace
 
-      # pokey tools
-      asar
-      binutils
-      file
-      patchelf
-      radare2
-      socat
-      strace
-
-      # doc
-      man-pages
-      man-pages-posix
+        # doc
+        man-pages
+        man-pages-posix
     ];
 }

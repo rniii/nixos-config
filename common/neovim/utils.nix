@@ -33,5 +33,3 @@ let
 in {
     inherit mkPlugin mkServer;
 }
-
-# vim: sw=4:

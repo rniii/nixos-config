@@ -1,40 +1,37 @@
 { lib, pkgs, ... }:
 
 {
-  imports =
-    [ ./networking.nix
-      ./programs.nix
+    imports = [
+        ./neovim
+        ./networking.nix
+        ./programs.nix
     ];
 
-  system.stateVersion = "25.11"; # yes, i did read the comment
+    system.stateVersion = "25.11"; # yes, i did read the comment
 
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+    boot.loader.systemd-boot.enable = true;
+    boot.loader.efi.canTouchEfiVariables = true;
+    boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  services.sshd.enable = true;
+    services.sshd.enable = true;
 
-  time.timeZone = null;
-  i18n.defaultLocale = lib.mkDefault "en_US.UTF-8";
+    time.timeZone = null;
+    i18n.defaultLocale = lib.mkDefault "en_US.UTF-8";
 
-  users.users =
-    let pubkeys = import ../pubkeys.nix; in
-    { rini =
-        { isNormalUser = true;
-          openssh.authorizedKeys.keys = pubkeys;
-        };
-      lily =
-        { isNormalUser = true;
-          openssh.authorizedKeys.keys = pubkeys;
-        };
-    };
+    users.users = let
+        pubkeys = import ../pubkeys.nix;
+    in (
+        lib.genAttrs [ "rini" "lily" ] (_: {
+            isNormalUser = true;
+            openssh.authorizedKeys.keys = pubkeys;
+        })
+    );
 
-  nix =
-    { nixPath = with import ../npins; [ "nixpkgs=${nixpkgs}" ];
-      settings =
-        { experimental-features = [ "nix-command" "flakes" ];
+    nix = {
+        nixPath = with import ../npins; [ "nixpkgs=${nixpkgs}" ];
+
+        settings = {
+            experimental-features = [ "nix-command" "flakes" ];
         };
     };
-
-  nixpkgs.config.allowUnfree = true;
 }

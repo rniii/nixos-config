@@ -1,10 +1,7 @@
 vim.g.colors_name = "meow"
 vim.o.termguicolors = true
 
-local palette
-
-if vim.o.background == "light" then
-  palette = {
+local palette = vim.o.background == "light" and {
     bg00 = "#fdf9fe", fg00 = "#958296",
     bg01 = "#ede8f4", fg01 = "#573e59",
     bg02 = "#d7d9e8", fg02 = "#40344f",
@@ -22,9 +19,7 @@ if vim.o.background == "light" then
     color12 = "#ffff80",
     color13 = "#80ff80",
     color14 = "#80ffff",
-  }
-else
-  palette = {
+} or {
     bg00 = "#1e191e", fg00 = "#8b7c8c",
     bg01 = "#282128", fg01 = "#e4dced",
     bg02 = "#3f383f", fg02 = "#f7edf7",
@@ -42,11 +37,10 @@ else
     color12 = "#ffff80",
     color13 = "#80ff80",
     color14 = "#80ffff",
-  }
-end
+}
 
 local function hi(name, val)
-  vim.api.nvim_set_hl(0, name, val)
+    vim.api.nvim_set_hl(0, name, val)
 end
 
 vim.cmd [[hi clear]]

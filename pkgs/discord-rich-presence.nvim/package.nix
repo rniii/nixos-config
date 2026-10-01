@@ -10,5 +10,3 @@ vimUtils.buildVimPlugin {
 
     doCheck = false;
 }
-
-# vim: sw=4:

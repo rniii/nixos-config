@@ -1,13 +1,13 @@
 {
-  imports = [ ../desktop ];
+    imports = [ ../desktop ];
 
-  users.users.meow =
-    { isNormalUser    = true;
-      initialPassword = "meow";
+    users.users.meow = {
+        isNormalUser    = true;
+        initialPassword = "meow";
     };
 
-  virtualisation.vmVariant.virtualisation =
-    { memorySize = 4096;
-      cores      = 4;
+    virtualisation.vmVariant.virtualisation = {
+        memorySize = 4096;
+        cores      = 4;
     };
 }

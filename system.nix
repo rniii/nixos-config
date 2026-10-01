@@ -1,9 +1,12 @@
-let
-  inherit (import ./npins) nixpkgs;
+with import ./npins;
+with import nixpkgs {
+    config.allowUnfree = true;
+};
 
-  lib = import "${nixpkgs}/lib";
-in
-  lib.genAttrs [ "aaya" "atri" "compute2" "testvm" "tulip" ] (host:
-    import "${nixpkgs}/nixos"
-      { configuration = ./hosts/${host}.nix;
-      })
+lib.genAttrs [
+    "aaya"
+    "atri"
+    "compute2"
+    "testvm"
+    "tulip"
+] (host: nixos ./hosts/${host}.nix)

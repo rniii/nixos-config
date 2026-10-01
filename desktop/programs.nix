@@ -53,10 +53,10 @@ in {
         neovide
         obs-cmd
         osu-lazer-bin
-        picard
         prismlauncher
         signal-desktop
         strawberry
+        supersonic
         syncplay
         vesktop
 
@@ -69,15 +69,15 @@ in {
         aria2
         ffmpeg
         pkgs-frozen.jiten
-        (listenbrainz-mpd.overrideAttrs (finalAttrs: {
-            postPatch = ''
-                substituteInPlace listenbrainz-mpd.service --replace-fail \
-                    "ExecStart=/usr/bin/" "ExecStart=$out/bin/"
-            '';
-            postInstall = finalAttrs.postInstall + ''
-                install -Dm644 listenbrainz-mpd.service -t $out/lib/systemd/user
-            '';
-        }))
+        # (listenbrainz-mpd.overrideAttrs (finalAttrs: {
+        #     postPatch = ''
+        #         substituteInPlace listenbrainz-mpd.service --replace-fail \
+        #             "ExecStart=/usr/bin/" "ExecStart=$out/bin/"
+        #     '';
+        #     postInstall = finalAttrs.postInstall + ''
+        #         install -Dm644 listenbrainz-mpd.service -t $out/lib/systemd/user
+        #     '';
+        # }))
         mpd
         mpd-mpris
         mpc
@@ -100,5 +100,3 @@ in {
         yt-dlp
     ];
 }
-
-# vim: set sw=4:

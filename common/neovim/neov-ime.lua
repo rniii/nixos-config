@@ -17,5 +17,3 @@ vim.api.nvim_create_autocmd({"CmdlineEnter", "CmdlineLeave"}, {
 })
 
 vim.g.neovide_input_ime = false
-
--- vim: sw=4:

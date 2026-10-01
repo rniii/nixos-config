@@ -17,19 +17,19 @@ local severity = vim.diagnostic.severity
 -- end
 
 local function hl(text, group)
-  return (group and "%#" .. group .. "#" or "%*") .. text
+    return (group and "%#" .. group .. "#" or "%*") .. text
 end
 
 local function strwidth(text)
-  return vim.api.nvim_strwidth(text)
+    return vim.api.nvim_strwidth(text)
 end
 
 local function truncate(text, len)
-  while strwidth(text) > len - 1 do
-    text = vim.fn.slice(text, 0, -1)
-  end
+    while strwidth(text) > len - 1 do
+        text = vim.fn.slice(text, 0, -1)
+    end
 
-  return text .. string.rep(" ", len - strwidth(text) - 1) .. "…"
+    return text .. string.rep(" ", len - strwidth(text) - 1) .. "…"
 end
 
 --- Main exports ------------------------------------------
@@ -37,60 +37,60 @@ end
 local M = {}
 
 function M.statusline()
-  return " %{%v:lua.require'ui'.status_bufname()%}"
-      .. " %{%v:lua.require'ui'.status_diagnostic()%}"
-      .. " %{%v:lua.require'ui'.status_diffstatus()%}"
-      .. "%="
-      .. hl("%-14.(%l,%c%V%) %P")
+    return " %{%v:lua.require'ui'.status_bufname()%}"
+        .. " %{%v:lua.require'ui'.status_diagnostic()%}"
+        .. " %{%v:lua.require'ui'.status_diffstatus()%}"
+        .. "%="
+        .. hl("%-14.(%l,%c%V%) %P")
 end
 
 function M.tabline(bufnr)
-  return ""
+    return ""
 end
 
 function M.winbar()
-  return ""
+    return ""
 end
 
 --- Statusline components ---------------------------------
 
 function M.status_bufname()
-  local icon, icon_hl = MiniIcons.get("file", vim.fn.bufname() or "")
+    local icon, icon_hl = MiniIcons.get("file", vim.fn.bufname() or "")
 
-  return hl(icon .. " ", icon_hl) .. hl("%f") .. hl("%h%w%m%r", "NonText")
+    return hl(icon .. " ", icon_hl) .. hl("%f") .. hl("%h%w%m%r", "NonText")
 end
 
 function M.status_diagnostic()
-  local text = ""
-  local diagnostics = vim.diagnostic.count(0)
+    local text = ""
+    local diagnostics = vim.diagnostic.count(0)
 
-  if diagnostics[severity.ERROR] then
-    text = text
-      .. hl(" ", "DiagnosticError")
-      .. hl(diagnostics[severity.ERROR])
-  end
+    if diagnostics[severity.ERROR] then
+        text = text
+            .. hl(" ", "DiagnosticError")
+            .. hl(diagnostics[severity.ERROR])
+    end
 
-  if diagnostics[severity.WARN] then
-    text = text
-      .. hl(" ", "DiagnosticWarn")
-      .. hl(diagnostics[severity.WARN])
-  end
+    if diagnostics[severity.WARN] then
+        text = text
+            .. hl(" ", "DiagnosticWarn")
+            .. hl(diagnostics[severity.WARN])
+    end
 
-  return text
+    return text
 end
 
 function M.status_diffstatus()
-  local status = vim.b.gitsigns_status_dict or {}
-  local text = ""
+    local status = vim.b.gitsigns_status_dict or {}
+    local text = ""
 
-  if status.added and status.changed and status.removed then
-    text = text
-      .. hl("+" .. status.added,   "Added")   .. " "
-      .. hl("~" .. status.changed, "Changed") .. " "
-      .. hl("-" .. status.removed, "Removed")
-  end
+    if status.added and status.changed and status.removed then
+        text = text
+            .. hl("+" .. status.added,   "Added")   .. " "
+            .. hl("~" .. status.changed, "Changed") .. " "
+            .. hl("-" .. status.removed, "Removed")
+    end
 
-  return text
+    return text
 end
 
 return M

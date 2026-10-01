@@ -1,20 +1,20 @@
 { pkgs, ... }:
 
 {
-  imports =
-    [ ../common/default.nix
+    imports = [
+        ../common/default.nix
     ];
 
-  networking.firewall.enable = true;
+    networking.firewall.enable = true;
 
-  users.users.openbench =
-    { isNormalUser = true;
-      openssh.authorizedKeys.keys =
-        [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPAHsUKVtmPC/QgaisBCG7oDJDF2fIn1Jn/rTvgjIrMP lily@tulip"
+    users.users.openbench = {
+        isNormalUser = true;
+        openssh.authorizedKeys.keys = [
+            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPAHsUKVtmPC/QgaisBCG7oDJDF2fIn1Jn/rTvgjIrMP lily@tulip"
         ];
     };
 
-  environment.systemPackages = with pkgs;
-    [ screen
+    environment.systemPackages = with pkgs; [
+        screen
     ];
 }

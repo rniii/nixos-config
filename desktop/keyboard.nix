@@ -1,9 +1,7 @@
 { pkgs, ... }:
 
 let
-  xkb-patched =
-    pkgs.xkeyboard-config.overrideAttrs
-      { postPatch = ''
+    xkb-patched = pkgs.xkeyboard-config.overrideAttrs { postPatch = ''
         cat >>symbols/jp <<EOF
 
         partial alphanumeric_keys xkb_symbols "abnt2_thinkpad" {
@@ -29,9 +27,10 @@ let
         .
         w
         EOF
-        '';
-      };
+    ''; };
 in
 {
-  environment.sessionVariables = { XKB_CONFIG_ROOT = "${xkb-patched}/etc/X11/xkb"; };
+    environment.sessionVariables = {
+        XKB_CONFIG_ROOT = "${xkb-patched}/etc/X11/xkb";
+    };
 }

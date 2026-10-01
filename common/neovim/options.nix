@@ -18,5 +18,3 @@
         undofile = true;
     };
 }
-
-# vim: sw=4:

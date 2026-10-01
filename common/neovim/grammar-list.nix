@@ -1,42 +1,43 @@
 grammars: with grammars;
 
-[ # web
-  css
-  html
-  javascript
-  jsdoc
-  tsx
-  typescript
-  vue
+[
+    # web
+    css
+    html
+    javascript
+    jsdoc
+    tsx
+    typescript
+    vue
 
-  # c
-  c
-  cpp
-  doxygen
+    # c
+    c
+    cpp
+    doxygen
 
-  # languages
-  d
-  erlang
-  glsl
-  go
-  haskell
-  java
-  kotlin
-  lua
-  nix
-  ocaml
-  python
-  ruby
-  rust
-  sql
+    # languages
+    d
+    erlang
+    glsl
+    go
+    haskell
+    java
+    kotlin
+    lua
+    nix
+    ocaml
+    python
+    ruby
+    rust
+    sql
 
-  # data
-  json
-  toml
-  yaml
+    # data
+    json
+    toml
+    yaml
 
-  # doc
-  markdown
-  markdown_inline
-  vimdoc
+    # doc
+    markdown
+    markdown_inline
+    vimdoc
 ]
