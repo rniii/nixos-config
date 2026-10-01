@@ -5,6 +5,7 @@
         ./neovim
         ./networking.nix
         ./programs.nix
+        ./shell.nix
     ];
 
     system.stateVersion = "25.11"; # yes, i did read the comment
@@ -24,6 +25,7 @@
         lib.genAttrs [ "rini" "lily" ] (_: {
             isNormalUser = true;
             openssh.authorizedKeys.keys = pubkeys;
+            shell = pkgs.fish;
         })
     );
 

@@ -67,23 +67,9 @@ in {
 
         # other
         aria2
+        dragon-drop
         ffmpeg
         pkgs-frozen.jiten
-        # (listenbrainz-mpd.overrideAttrs (finalAttrs: {
-        #     postPatch = ''
-        #         substituteInPlace listenbrainz-mpd.service --replace-fail \
-        #             "ExecStart=/usr/bin/" "ExecStart=$out/bin/"
-        #     '';
-        #     postInstall = finalAttrs.postInstall + ''
-        #         install -Dm644 listenbrainz-mpd.service -t $out/lib/systemd/user
-        #     '';
-        # }))
-        mpd
-        mpd-mpris
-        mpc
-        (ncmpcpp.override {
-            visualizerSupport = true;
-        })
         pi-coding-agent
         playerctl
         qpwgraph
