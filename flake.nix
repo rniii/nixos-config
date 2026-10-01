@@ -2,7 +2,7 @@
     inputs.nixpkgs.url = "nixpkgs/nixos-unstable";
     inputs.nixpkgs-frozen.url = "nixpkgs/nixos-26.05";
 
-    inputs.nixos-hardware = "nixos-hardware";
+    inputs.nixos-hardware.url = "nixos-hardware";
 
     outputs = { self, nixpkgs }@inputs: let
         inherit (nixpkgs) lib;
