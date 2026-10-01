@@ -1,13 +1,13 @@
 { lib, inputs, ... }:
 
 {
-    imports = with inputs.nixos-hardware.nixosModules; [
+    imports = with inputs; [
         ../desktop
 
-        lenovo-thinkpad-t14
-        common-cpu-amd
-        common-gpu-amd
-        common-cpu-amd-pstate
+        "${nixos-hardware}/lenovo/thinkpad/t14"
+        "${nixos-hardware}/common/cpu/amd"
+        "${nixos-hardware}/common/gpu/amd"
+        "${nixos-hardware}/common/cpu/amd/pstate.nix"
     ];
 
     networking.hostName = "tulip";

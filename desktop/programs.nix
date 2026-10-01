@@ -1,7 +1,8 @@
-{ pkgs, inputs, ... }:
+{ config, pkgs, inputs, ... }:
 
 let
     pkgs-frozen = import inputs.nixpkgs-frozen {
+        inherit (config.nixpkgs.hostPlatform) system;
         config.allowUnfree = true;
     };
 in {
@@ -44,7 +45,7 @@ in {
 
     environment.systemPackages = with pkgs; [
         # gui applications
-        pkgs-frozen.aseprite # slow
+        # pkgs-frozen.aseprite # slow
         darktable
         gimp
         keepassxc

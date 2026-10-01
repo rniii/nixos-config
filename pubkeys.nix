@@ -1,0 +1,5 @@
+[
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG5LFL/I4IKsev8Uusocox0N/WXHis67aUMlgLSkFDU1 rini@aaya"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII8oBp2DpCdwqqbim0q4Jb0iC4gZbNq1oB4ji6I6rsUc lily@garden"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILH1YlqCD3u3kP2o1eeoCCQ8X8UbyALkfmVFH6uaNtdQ lily@tulip"
+]
