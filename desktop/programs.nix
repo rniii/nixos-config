@@ -1,8 +1,9 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 
 let
-    sources = import ../npins;
-    pkgs-frozen = import sources.nixpkgs-frozen { config.allowUnfree = true; };
+    pkgs-frozen = import inputs.nixpkgs-frozen {
+        config.allowUnfree = true;
+    };
 in {
     programs.appimage.enable = true;  # osu-lazer
 
