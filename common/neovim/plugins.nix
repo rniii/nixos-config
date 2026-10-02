@@ -1,26 +1,18 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 let
     cfg = config.programs.neovim;
 
-    utils = pkgs.callPackage ./utils.nix {};
+    inherit (pkgs.callPackage ./utils.nix {})
+        mkPlugin;
 
-    inherit (utils) mkPlugin;
-
-    discord-rich-presence-nvim = pkgs.callPackage
-        ../../pkgs/discord-rich-presence.nvim/package.nix
-        { };
+    inherit (inputs.self.packages.${pkgs.stdenv.system})
+        discord-rich-presence-nvim
+        neov-ime-nvim
+        twoslash-queries-nvim;
 
     nvim-treesitter-wrapped = with pkgs.vimPlugins;
         nvim-treesitter.withPlugins (import ./grammar-list.nix);
-
-    neov-ime-nvim = pkgs.callPackage
-        ../../pkgs/neov-ime-nvim/package.nix
-        { };
-
-    twoslash-queries-nvim = pkgs.callPackage
-        ../../pkgs/twoslash-queries-nvim/package.nix
-        { };
 in (
     lib.mkMerge [
         {

@@ -1,8 +1,10 @@
-{ pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 let
-    sources = import ../npins;
-    pkgs-frozen = import sources.nixpkgs-frozen { config.allowUnfree = true; };
+    pkgs-frozen = import inputs.nixpkgs-frozen {
+        inherit (config.nixpkgs.hostPlatform) system;
+        config.allowUnfree = true;
+    };
 in {
     programs.appimage.enable = true;  # osu-lazer
 
@@ -43,7 +45,7 @@ in {
 
     environment.systemPackages = with pkgs; [
         # gui applications
-        pkgs-frozen.aseprite # slow
+        # pkgs-frozen.aseprite # slow
         darktable
         gimp
         keepassxc

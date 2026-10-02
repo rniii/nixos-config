@@ -3,9 +3,8 @@
 let
     cfg = config.programs.neovim;
 
-    utils = pkgs.callPackage ./utils.nix {};
-
-    inherit (utils) mkServer;
+    inherit (pkgs.callPackage ./utils.nix {})
+        mkServer;
 in (
     lib.mkIf cfg.enableLspPlugins {
         programs.neovim.languageServers = with pkgs; [

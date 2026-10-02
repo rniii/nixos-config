@@ -29,11 +29,8 @@
         })
     );
 
-    nix = {
-        nixPath = with import ../npins; [ "nixpkgs=${nixpkgs}" ];
+    nix.settings.experimental-features = [ "nix-command" "flakes" ];
+    nix.channel.enable = false;
 
-        settings = {
-            experimental-features = [ "nix-command" "flakes" ];
-        };
-    };
+    nixpkgs.config.allowUnfree = true;
 }

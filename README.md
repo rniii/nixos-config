@@ -17,10 +17,8 @@ $ tree
 │   ├── compute2.nix        --  compute, Mini-ITX board [AMD Ryzen 9 7940HX]          (2024/08/20)
 │   ├── tulip.nix           --  desktop, Thinkpad T14 Gen 6 [AMD Ryzen AI 7 PRO 350]  (2025/08/29)
 │   └── testvm.nix          --  for use with build-vm
-├── npins/
-│   └── ...
-├── default.nix             -- Plain NixOS config object, evaluates selected host
 ├── pubkeys.nix             -- SSH keys for in-network access
+├── flake.nix
 └── README.md
 ```
 

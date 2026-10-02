@@ -1,6 +1,7 @@
-{ lib, ... }:
+{ lib, inputs, ... }:
+
 {
-    imports = with import ../npins; [
+    imports = with inputs; [
         ../desktop
 
         "${nixos-hardware}/lenovo/thinkpad/t14"

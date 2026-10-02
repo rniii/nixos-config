@@ -19,9 +19,6 @@
         gdb lldb
         nasm
 
-        # nixing
-        npins
-
         # sysadmin
         bubblewrap
         dig
