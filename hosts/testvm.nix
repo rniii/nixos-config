@@ -10,4 +10,6 @@
         memorySize = 4096;
         cores      = 4;
     };
+
+    nixpkgs.hostPlatform = "x86_64-linux";
 }
