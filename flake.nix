@@ -2,7 +2,10 @@
     inputs = {
         nixpkgs.url = "nixpkgs/nixos-unstable";
         nixpkgs-frozen.url = "nixpkgs/nixos-26.05";
-        nixos-hardware.url = "nixos-hardware";
+        nixos-hardware = {
+            url = "nixos-hardware";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
     };
 
     outputs = { self, nixpkgs, ... }@inputs: let
