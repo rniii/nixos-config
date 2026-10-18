@@ -45,7 +45,8 @@ in {
 
     environment.systemPackages = with pkgs; [
         # gui applications
-        # pkgs-frozen.aseprite # slow
+        pkgs-frozen.aseprite # slow
+        blockbench
         darktable
         gimp
         keepassxc

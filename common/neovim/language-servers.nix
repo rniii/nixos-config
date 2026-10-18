@@ -12,6 +12,7 @@ in (
             (mkServer emmet-language-server "emmet_language_server")
             (mkServer haskell-language-server "hls" {
                 hls.filetypes = [ "haskell" "lhaskell" "cabal" ];
+                hls.settings.haskell.formattingProvider = "fourmolu";
             })
             (mkServer nixd)
             (mkServer typescript-language-server "ts_ls")

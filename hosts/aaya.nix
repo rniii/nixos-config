@@ -14,6 +14,10 @@
     i18n.defaultLocale = lib.mkForce "ja_JP.UTF-8";
     programs.firefox.languagePacks = [ "ja" ];
 
+    boot.extraModprobeConfig = ''
+        options ttm pages_limit=3773154
+    '';
+
     hardware.bluetooth.enable = true;
 
     services.broadcast-box.enable = true;
