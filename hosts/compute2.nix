@@ -1,11 +1,26 @@
-{ lib, ... }:
+{ lib, inputs, pkgs, ... }:
 
 {
-    imports = [
+    imports = with inputs; [
         ../compute
+        tangled.nixosModules.knot-rs
     ];
 
     networking.hostName = "compute2";
+
+    services.tangled.knot-rs = {
+        enable = true;
+        # echo KNOT_MASTER_KEY="$(openssl rand -base64 32)" >/etc/knot/knot.env
+        environmentFile = "/etc/knot/knot.env";
+        settings.server = {
+            hostname = "knot.87flowers.com";
+            admins = [
+                "did:plc:nu2smxstuurftjhruoag2b6w" # @lily.tngl.sh
+                "did:plc:boexphx7aijdxxciuvpkmyjh" # @rini.tngl.sh
+            ];
+        };
+        settings.xrpc.trusted_proxy_header = "x-forwarded-for";
+    };
 
     # nixos-generate-config --show-hardware-config
 

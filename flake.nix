@@ -6,6 +6,10 @@
             url = "nixos-hardware";
             inputs.nixpkgs.follows = "nixpkgs";
         };
+        tangled = {
+            url = "https://tangled.org/tangled.org/core/archive/d462c422b496df705e83f2bfa6e208d2fe04e07d.tar.gz";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
     };
 
     outputs = { self, nixpkgs, ... }@inputs: let
