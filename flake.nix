@@ -15,6 +15,7 @@
             "aaya"
             "atri"
             "compute2"
+            "installer"
             "testvm"
             "tulip"
         ];
