@@ -2,7 +2,7 @@
 
 {
     imports = [
-        ../common
+        ../common/minimal.nix
         "${modulesPath}/installer/netboot/netboot-minimal.nix"
     ];
 
