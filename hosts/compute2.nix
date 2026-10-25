@@ -7,6 +7,31 @@
 
     networking.hostName = "compute2";
 
+    services.openssh = {
+        ports = [ 22 29793 ];
+
+        extraConfig = ''
+            Match LocalPort 29793
+                AllowUsers git
+            Match all
+        '';
+    };
+
+    services.tangled = {
+        knot = {
+            enable = true;
+            gitUser = "git";
+            stateDir = "/var/lib/tangled-knot";
+            repo.scanPath = "${services.tangled.knot.stateDir}/repos";
+            server = {
+                listenAddr = "0.0.0.0:29794";
+                hostname = "knot.87flowers.com";
+                internalListenAdr = "127.0.0.1:29795";
+                owner = "did:plc:nu2smxstuurftjhruoag2b6w";
+            };
+        };
+    };
+
     # nixos-generate-config --show-hardware-config
 
     boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" ];

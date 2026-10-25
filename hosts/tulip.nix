@@ -1,5 +1,6 @@
 { lib, inputs, ... }:
 
+{ lib, pkgs, ... }:
 {
     imports = with inputs; [
         ../desktop
@@ -13,6 +14,7 @@
     networking.hostName = "tulip";
     networking.firewall.checkReversePath = "loose";
 
+
     services.mullvad-vpn.enable = true;
     networking.interfaces.tailscale0.ipv4.routes = [
         { address = "100.64.0.0"; prefixLength = 10; }
@@ -21,6 +23,7 @@
     services.tailscale.extraSetFlags = [
         "--accept-dns=false"
         "--accept-routes=false"
+        "--no-logs-no-support"
     ];
 
     networking.nftables.tables.mullvad_tailscale = {
@@ -36,6 +39,8 @@
             }
         '';
     };
+
+    hardware.firmware = [ pkgs.linux-firmware ];
 
     # nixos-generate-config --show-hardware-config
 
